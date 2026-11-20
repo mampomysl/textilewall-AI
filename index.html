@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TextileWall – tekstylne ściany i ramki na wymiar</title>
+<meta name="description" content="Tapety tekstylne, ramki i podświetlane ramki na aluminiowym profilu, wykonane na wymiar. Podaj wymiar, wybierz grafikę i od razu sprawdź cenę.">
+<link rel="canonical" href="https://textilewall.pl/">
+<meta property="og:title" content="TextileWall – każda ściana ma swój wymiar">
+<meta property="og:description" content="Grafika na tkaninie, naciągnięta na aluminiowy profil dokładnie na Twój wymiar.">
+<meta property="og:url" content="https://textilewall.pl/">
+<meta property="og:locale" content="pl_PL">
+<meta name="theme-color" content="#EEF0F0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
+
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['"Instrument Sans"', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'] },
+        colors: {
+          wall: 'var(--wall)', surface: 'var(--surface)', sunk: 'var(--sunk)',
+          ink: 'var(--ink)', 'on-ink': 'var(--on-ink)', muted: 'var(--muted)',
+          line: 'var(--line)', tape: 'var(--tape)', 'on-tape': 'var(--on-tape)'
+        }
+      }
+    }
+  };
+</script>
+
+<style>
+  /* ===== Paleta: chłodna ściana galerii + żółć miarki ===== */
+  :root{
+    color-scheme: light;
+    --wall:#EEF0F0; --surface:#FFFFFF; --sunk:#E2E6E6;
+    --ink:#1D2326; --on-ink:#FFFFFF; --muted:#5C666A; --line:#D3D9DA;
+    --tape:#F2C230; --on-tape:#1D2326; --glass:rgba(238,240,240,.82);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      color-scheme: dark;
+      --wall:#121517; --surface:#1A1E21; --sunk:#23292C;
+      --ink:#E9ECEC; --on-ink:#121517; --muted:#9AA3A7; --line:#31383B;
+      --tape:#F2C230; --on-tape:#1D2326; --glass:rgba(18,21,23,.82);
+    }
+  }
+  html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; scroll-padding-top:84px; }
+  body{ background:var(--wall); color:var(--ink); }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *,*::before,*::after{ transition:none !important; animation:none !important; }
+  }
+  :focus-visible{ outline:2px solid var(--tape); outline-offset:2px; }
+
+  /* Suwaki */
+  input[type=range].range{
+    -webkit-appearance:none; appearance:none; width:100%; height:4px; margin:12px 0 6px;
+    border-radius:999px; cursor:pointer;
+    background:linear-gradient(to right, var(--ink) 0 var(--fill,50%), var(--line) var(--fill,50%) 100%);
+  }
+  input[type=range].range::-webkit-slider-thumb{
+    -webkit-appearance:none; width:22px; height:22px; border-radius:50%;
+    background:var(--surface); border:2px solid var(--ink); box-shadow:0 1px 4px rgba(0,0,0,.2);
+  }
+  input[type=range].range::-moz-range-thumb{
+    width:18px; height:18px; border-radius:50%; background:var(--surface); border:2px solid var(--ink);
+  }
+  input[type=number]::-webkit-inner-spin-button{ opacity:.35; }
+
+  /* Linie wymiarowe – motyw przewodni */
+  .dim-x{ position:absolute; left:0; right:0; top:-20px; height:1px; background:var(--ink); }
+  .dim-y{ position:absolute; top:0; bottom:0; left:-20px; width:1px; background:var(--ink); }
+  .dim-x::before,.dim-x::after{ content:""; position:absolute; top:-5px; width:1px; height:11px; background:var(--ink); }
+  .dim-x::before{ left:0 } .dim-x::after{ right:0 }
+  .dim-y::before,.dim-y::after{ content:""; position:absolute; left:-5px; width:11px; height:1px; background:var(--ink); }
+  .dim-y::before{ top:0 } .dim-y::after{ bottom:0 }
+  .dim-tag{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    background:var(--tape); color:var(--on-tape); font-size:12px; font-weight:600; line-height:1.5;
+    padding:1px 8px; border-radius:4px; white-space:nowrap; font-variant-numeric:tabular-nums;
+  }
+  .dim-y .dim-tag{ transform:translate(-50%,-50%) rotate(-90deg); }
+
+  /* Warianty produktów na podglądzie */
+  .art{ position:relative; width:100%; height:100%; overflow:hidden; }
+  .art-tapeta{ box-shadow:0 14px 26px -16px rgba(0,0,0,.45); }
+  .art-ramka{ box-shadow:0 0 0 6px #202427, 0 20px 30px -14px rgba(0,0,0,.5); }
+  .art-ramka svg{ filter:hue-rotate(155deg) saturate(1.15); }
+  .art-led{ box-shadow:0 0 0 4px #C9CED1, 0 0 46px 8px rgba(255,214,140,.42); }
+  .art-led svg{ filter:brightness(1.08) saturate(1.35); }
+  .art-tkanina svg{ filter:saturate(.75); }
+  .art-tkanina::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:repeating-linear-gradient(90deg, transparent 0 22px, rgba(0,0,0,.07) 22px 27px, rgba(255,255,255,.12) 27px 31px);
+  }
+
+  /* Cropper w kolorach miarki */
+  .cropper-view-box{ outline:2px solid var(--tape); outline-color:var(--tape); }
+  .cropper-line,.cropper-point{ background-color:var(--tape); }
+  .cropper-modal{ opacity:.6; }
+
+  /* Galeria Unsplash */
+  .gallery{ columns:2; column-gap:12px; }
+  @media (min-width:640px){ .gallery{ columns:3; } }
+  @media (min-width:1024px){ .gallery{ columns:4; } }
+</style>
+
+<style type="text/tailwindcss">
+  @layer components{
+    .btn-primary{ @apply inline-flex items-center justify-center gap-2 rounded-full px-5 h-11 text-sm font-semibold transition bg-ink text-on-ink hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed; }
+    .btn-ghost{ @apply inline-flex items-center justify-center gap-2 rounded-full px-5 h-11 text-sm font-semibold transition border border-line bg-surface text-ink hover:border-ink; }
+    .chip{ @apply rounded-full border border-line bg-surface px-3.5 h-9 text-sm transition hover:border-ink; }
+    .icon-btn{ @apply inline-grid place-items-center w-10 h-10 rounded-full border border-line bg-surface transition hover:border-ink; }
+    .num-input{ @apply w-24 h-10 rounded-lg border border-line bg-surface px-3 text-right font-semibold tabular-nums outline-none focus:border-ink; }
+  }
+</style>
+</head>
+
+<body class="font-sans antialiased">
+
+<!-- ===================== NAGŁÓWEK ===================== -->
+<header class="sticky top-0 z-40 border-b border-line bg-[var(--glass)] backdrop-blur-xl">
+  <div class="mx-auto max-w-6xl px-5 h-16 flex items-center justify-between gap-6">
+    <a href="#" class="flex items-center gap-2.5 font-semibold text-lg tracking-tight">
+      <span class="relative w-7 h-5 border-2 border-ink rounded-[3px]" aria-hidden="true"><span class="absolute -top-[7px] left-0 right-0 h-[3px] bg-tape rounded-full"></span></span>
+      textilewall
+    </a>
+    <nav class="hidden md:flex items-center gap-8 text-sm text-muted">
+      <a href="#produkty" class="hover:text-ink transition">Produkty</a>
+      <a href="#jak-to-dziala" class="hover:text-ink transition">Jak to działa</a>
+      <a href="#kontakt" class="hover:text-ink transition">Kontakt</a>
+    </nav>
+    <button id="cart-open" class="relative inline-flex items-center gap-2 rounded-full border border-line bg-surface pl-3.5 pr-4 h-10 text-sm font-medium hover:border-ink transition" aria-label="Otwórz koszyk">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+      Koszyk
+      <span id="cart-count" class="hidden absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full bg-tape text-on-tape text-[11px] font-bold grid place-items-center tabular-nums">0</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- ===================== HERO ===================== -->
+  <section class="mx-auto max-w-6xl px-5 pt-12 pb-16 md:pt-20 md:pb-24 grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
+    <div>
+      <h1 class="text-[2.75rem] leading-[1.02] sm:text-6xl lg:text-7xl font-semibold tracking-[-0.035em]">Każda ściana ma swój wymiar.</h1>
+      <p class="mt-6 text-lg text-muted leading-relaxed max-w-[34rem]">Drukujemy grafikę na tkaninie i naciągamy ją na aluminiowy profil – dokładnie na tyle centymetrów, ile podasz. Montaż zajmuje kilka minut, a grafikę wymienisz bez remontu.</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#produkty" class="btn-primary h-12 px-6">Policz cenę swojej ściany</a>
+        <a href="#jak-to-dziala" class="btn-ghost h-12 px-6">Jak to działa</a>
+      </div>
+      <dl class="mt-12 grid grid-cols-3 gap-4 border-t border-line pt-6 max-w-lg">
+        <div><dt class="text-xs text-muted">Szerokość</dt><dd class="mt-1 font-semibold tabular-nums">40–1000 cm</dd></div>
+        <div><dt class="text-xs text-muted">Wysokość</dt><dd class="mt-1 font-semibold tabular-nums">40–300 cm</dd></div>
+        <div><dt class="text-xs text-muted">Cena</dt><dd class="mt-1 font-semibold">od razu</dd></div>
+      </dl>
+    </div>
+    <div id="hero-wall" class="w-full"></div>
+  </section>
+
+  <!-- ===================== PRODUKTY ===================== -->
+  <section id="produkty" class="bg-surface border-y border-line">
+    <div class="mx-auto max-w-6xl px-5 pt-16 md:pt-24 pb-6">
+      <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight max-w-xl">Wybierz system i podaj wymiar</h2>
+      <p class="mt-3 text-muted max-w-xl">Podgląd i cena zmieniają się razem z wymiarami. Grafikę dobierzesz w następnym kroku – z galerii zdjęć albo z własnego pliku.</p>
+      <div id="product-list" class="mt-6"></div>
+    </div>
+  </section>
+
+  <!-- ===================== JAK TO DZIAŁA ===================== -->
+  <section id="jak-to-dziala" class="mx-auto max-w-6xl px-5 py-16 md:py-24">
+    <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">Od wymiaru do ściany w czterech krokach</h2>
+    <ol class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <li><span class="grid place-items-center w-9 h-9 rounded-full bg-tape text-on-tape font-semibold tabular-nums">1</span><h3 class="mt-4 font-semibold">Podaj wymiar</h3><p class="mt-1.5 text-sm text-muted leading-relaxed">Wpisz szerokość i wysokość w centymetrach. Cenę widzisz od razu.</p></li>
+      <li><span class="grid place-items-center w-9 h-9 rounded-full bg-tape text-on-tape font-semibold tabular-nums">2</span><h3 class="mt-4 font-semibold">Wybierz grafikę</h3><p class="mt-1.5 text-sm text-muted leading-relaxed">Znajdź zdjęcie w galerii Unsplash albo prześlij własny plik.</p></li>
+      <li><span class="grid place-items-center w-9 h-9 rounded-full bg-tape text-on-tape font-semibold tabular-nums">3</span><h3 class="mt-4 font-semibold">Dopasuj kadr</h3><p class="mt-1.5 text-sm text-muted leading-relaxed">Kadr ma proporcje Twojej ściany. Od razu widzisz, czy jakość wystarczy do druku.</p></li>
+      <li><span class="grid place-items-center w-9 h-9 rounded-full bg-tape text-on-tape font-semibold tabular-nums">4</span><h3 class="mt-4 font-semibold">Zamów i zamontuj</h3><p class="mt-1.5 text-sm text-muted leading-relaxed">Dostajesz profil i tkaninę gotowe do montażu, bez wiercenia w całej ścianie.</p></li>
+    </ol>
+
+    <div class="mt-16 grid md:grid-cols-3 gap-8 border-t border-line pt-10">
+      <div><h3 class="font-semibold">Kontrola jakości</h3><p class="mt-1.5 text-sm text-muted leading-relaxed">Każdy wydruk sprawdzamy przed wysyłką. Jeśli coś jest nie tak, drukujemy ponownie na nasz koszt.</p></div>
+      <div><h3 class="font-semibold">Zmiana wymiaru przed wysyłką</h3><p class="mt-1.5 text-sm text-muted leading-relaxed">Pomyliłeś się przy mierzeniu? Napisz do nas przed wysyłką, a zmienimy rozmiar bez dodatkowych kosztów.</p></div>
+      <div><h3 class="font-semibold">Wsparcie w 24 godziny</h3><p class="mt-1.5 text-sm text-muted leading-relaxed">Odpowiadamy na czacie, mailowo i telefonicznie – także w sprawie wyceny nietypowych wymiarów.</p></div>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== STOPKA ===================== -->
+<footer id="kontakt" class="bg-ink text-on-ink">
+  <div class="mx-auto max-w-6xl px-5 py-14 grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+    <div>
+      <div class="text-xl font-semibold tracking-tight">textilewall</div>
+      <p class="mt-3 text-sm opacity-70 max-w-sm leading-relaxed">Tekstylne ściany i ramki na aluminiowym profilu, wykonywane na wymiar.</p>
+    </div>
+    <div class="text-sm leading-7">
+      <div class="font-semibold mb-2">Kontakt</div>
+      <a href="tel:+48788799155" class="block opacity-80 hover:opacity-100">+48 788 799 155</a>
+      <a href="mailto:kontakt@textilewall.pl" class="block opacity-80 hover:opacity-100">kontakt@textilewall.pl</a>
+    </div>
+    <div class="text-sm leading-7 opacity-80">
+      <div class="font-semibold mb-2 opacity-100">Mam Pomysł Konrad Czajkowski</div>
+      ul. Polna 26/2<br>55-010 Smardzów<br>NIP 6932068382
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="mx-auto max-w-6xl px-5 py-6 flex flex-wrap gap-x-6 gap-y-2 justify-between text-xs opacity-60">
+      <span>© <span id="year"></span> TextileWall.pl</span>
+      <span class="flex gap-5"><a href="/regulamin" class="hover:opacity-100">Regulamin</a><a href="/polityka-prywatnosci" class="hover:opacity-100">Polityka prywatności</a><a href="/dostawa" class="hover:opacity-100">Dostawa i płatność</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== KONFIGURATOR (modal) ===================== -->
+<div id="cfg" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="cfg-title">
+  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" data-close-cfg></div>
+  <div class="absolute inset-0 sm:inset-4 lg:inset-8 mx-auto max-w-6xl bg-surface sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden">
+    <div class="shrink-0 flex items-center justify-between gap-4 px-5 sm:px-8 h-16 border-b border-line">
+      <div class="min-w-0">
+        <div class="text-xs text-muted">Konfigurator</div>
+        <h2 id="cfg-title" class="font-semibold truncate">Produkt</h2>
+      </div>
+      <ol id="cfg-steps" class="hidden md:flex items-center gap-2 text-sm"></ol>
+      <button class="icon-btn shrink-0" data-close-cfg aria-label="Zamknij konfigurator">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="md:hidden shrink-0 px-5 pt-3 pb-3 border-b border-line">
+      <div id="cfg-step-label" class="text-xs font-medium text-muted"></div>
+      <div class="mt-2 h-1 rounded-full bg-line overflow-hidden"><div id="cfg-progress" class="h-full bg-tape transition-all duration-300" style="width:25%"></div></div>
+    </div>
+    <div id="cfg-body" class="flex-1 overflow-y-auto px-5 sm:px-8 py-8"></div>
+    <div class="shrink-0 border-t border-line px-5 sm:px-8 py-3.5 flex items-center gap-3">
+      <button id="cfg-back" class="btn-ghost">Wstecz</button>
+      <div class="ml-auto text-right">
+        <div id="cfg-meta" class="text-xs text-muted tabular-nums"></div>
+        <div id="cfg-price" class="font-semibold text-lg tabular-nums leading-tight"></div>
+      </div>
+      <button id="cfg-next" class="btn-primary">Dalej</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== KOSZYK (sidebar) ===================== -->
+<div id="cart" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+  <div class="absolute inset-0 bg-black/40" data-close-cart></div>
+  <aside id="cart-panel" class="absolute right-0 top-0 h-full w-full max-w-md bg-surface shadow-2xl flex flex-col translate-x-full transition-transform duration-300 ease-out">
+    <div class="shrink-0 flex items-center justify-between px-5 h-16 border-b border-line">
+      <h2 id="cart-title" class="font-semibold text-lg">Koszyk</h2>
+      <button class="icon-btn" data-close-cart aria-label="Zamknij koszyk">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div id="cart-items" class="flex-1 overflow-y-auto px-5"></div>
+    <div class="shrink-0 border-t border-line p-5 space-y-4">
+      <div class="flex justify-between text-sm"><span class="text-muted">Dostawa</span><span>obliczana przy płatności</span></div>
+      <div class="flex justify-between items-end"><span class="font-medium">Razem</span><span id="cart-total" class="text-2xl font-semibold tabular-nums">0 zł</span></div>
+      <button id="checkout" class="btn-primary w-full h-12">Przejdź do płatności</button>
+      <p class="text-xs text-muted text-center">Płatność online przez Przelewy24</p>
+    </div>
+  </aside>
+</div>
+
+<div id="toasts" class="fixed bottom-5 inset-x-0 z-[60] flex flex-col items-center gap-2 px-4 pointer-events-none" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+<script>
+/* =====================================================================
+   KONFIGURACJA – tu zmieniasz ceny, limity i klucze
+   ===================================================================== */
+const CONFIG = {
+  unsplash: {
+    // Klucz z dotychczasowej strony. Lepiej przenieść go do funkcji Vercel
+    // (np. /api/unsplash) i ustawić poniżej `proxy`, wtedy nie trafia do przeglądarki.
+    accessKey: '7ZxnxszR0Y6HCXcCL6ZeOEI9SDqfRJ5gPh1AzVodkyM',
+    proxy: null,          // np. '/api/unsplash' → wywołania: /api/unsplash/search?..., /api/unsplash/download?location=...
+    perPage: 24,
+    appName: 'textilewall' // utm_source wymagany przez zasady Unsplash
+  },
+  limits: { minW: 40, maxW: 1000, minH: 40, maxH: 300 },
+  quality: { good: 60, ok: 35 }, // efektywne DPI wydruku
+  storageKey: 'tw_cart_v1'
+};
+
+// Ceny tymczasowe: zł za 1 cm². Formułę zmienisz w funkcji price().
+const PRODUCTS = [
+  { id: 'tapeta', name: 'Tapeta 2.0', pricePerCm2: 1, defaultW: 250, defaultH: 180,
+    desc: 'Grafika na tkaninie naciągnięta na aluminiowy profil – od ściany do ściany. Bez kleju i bez niszczenia tynku, więc sprawdzi się także w wynajmowanym mieszkaniu.',
+    features: ['Aluminiowy profil', 'Montaż w kilka minut', 'Wymienna grafika'] },
+  { id: 'ramka', name: 'Ramki na ścianę', pricePerCm2: 1, defaultW: 120, defaultH: 80,
+    desc: 'Grafika w smukłej aluminiowej ramie, wykonana na Twój wymiar. Wygląda jak obraz, a format dobierasz co do centymetra.',
+    features: ['Smukła rama', 'Gotowa do powieszenia', 'Dowolny format'] },
+  { id: 'led', name: 'Podświetlane ramki na ścianę', pricePerCm2: 3, defaultW: 100, defaultH: 70,
+    desc: 'Rama z równomiernym podświetleniem LED od tyłu. Grafika świeci pełnym kolorem i staje się źródłem światła w pomieszczeniu.',
+    features: ['Podświetlenie LED', 'Tkanina przepuszczająca światło', 'Wymienna grafika'] },
+  { id: 'tkanina', name: 'Dodatkowa tkanina', pricePerCm2: 0.7, defaultW: 250, defaultH: 180,
+    desc: 'Sam wydruk na tkaninie do systemu TextileWall, który już masz. Zdejmujesz starą grafikę, wpinasz nową i nowa aranżacja jest gotowa.',
+    features: ['Bez ramy', 'Pasuje do posiadanego systemu', 'Zmiana w kilka minut'] }
+];
+
+const TAGS = ['Góry', 'Las', 'Ocean', 'Kwiaty', 'Miasto', 'Abstrakcja', 'Tekstura', 'Minimalizm', 'Plaża', 'Architektura'];
+const STEPS = ['Wymiary', 'Grafika', 'Kadrowanie', 'Podsumowanie'];
+
+/* =====================================================================
+   NARZĘDZIA
+   ===================================================================== */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const product = id => PRODUCTS.find(p => p.id === id);
+const lim = axis => axis === 'w' ? [CONFIG.limits.minW, CONFIG.limits.maxW] : [CONFIG.limits.minH, CONFIG.limits.maxH];
+const utm = `?utm_source=${CONFIG.unsplash.appName}&utm_medium=referral`;
+
+function price(p, w, h) { return Math.round(w * h * p.pricePerCm2 * 100) / 100; }
+function fmt(n) {
+  return new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN',
+    minimumFractionDigits: Number.isInteger(n) ? 0 : 2, maximumFractionDigits: 2 }).format(n);
+}
+function area(w, h) { return `Powierzchnia ${(w * h / 10000).toLocaleString('pl-PL', { maximumFractionDigits: 2 })} m²`; }
+function fmtRate(p) { return `${String(p.pricePerCm2).replace('.', ',')} zł za cm²`; }
+
+function toast(msg, type = 'info') {
+  const t = document.createElement('div');
+  t.className = `pointer-events-auto max-w-md rounded-xl px-4 py-3 text-sm shadow-lg transition duration-300 opacity-0 translate-y-2 ${
+    type === 'error' ? 'bg-[#FDECEC] text-[#8A1F1F] border border-[#F5C2C2]' : 'bg-ink text-on-ink'}`;
+  t.textContent = msg;
+  $('#toasts').appendChild(t);
+  requestAnimationFrame(() => t.classList.remove('opacity-0', 'translate-y-2'));
+  setTimeout(() => { t.classList.add('opacity-0'); setTimeout(() => t.remove(), 300); }, type === 'error' ? 5200 : 3200);
+}
+
+/* =====================================================================
+   STAN
+   ===================================================================== */
+const dims = {};                 // wymiary per produkt + 'modal'
+PRODUCTS.forEach(p => dims[p.id] = { w: p.defaultW, h: p.defaultH });
+
+const state = {
+  productId: null, w: 0, h: 0, step: 0, tab: 'unsplash',
+  image: null,    // { source:'unsplash'|'upload', src, origW, origH, photo?, fileName?, objectUrl? }
+  crop: null,     // { imgData, ratio, rect, dpi }
+  preview: null,  // dataURL podglądu po kadrowaniu
+  search: { q: '', page: 1, totalPages: 1, results: [], loading: false, error: null, orientation: null }
+};
+let cropper = null;
+let cart = loadCart();
+
+/* =====================================================================
+   PODGLĄD ŚCIANY Z LINIAMI WYMIAROWYMI
+   ===================================================================== */
+function art(id) {
+  return `<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" class="block w-full h-full" aria-hidden="true">
+    <defs><linearGradient id="sky-${id}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9DB8C7"/><stop offset=".62" stop-color="#E8D6B8"/><stop offset="1" stop-color="#F2C88A"/>
+    </linearGradient></defs>
+    <rect width="400" height="260" fill="url(#sky-${id})"/>
+    <circle cx="292" cy="120" r="24" fill="#FBE8B8"/>
+    <path d="M0 172 L70 110 L122 152 L192 80 L262 150 L312 118 L400 176 V260 H0Z" fill="#7C8D97"/>
+    <path d="M0 206 L92 150 L152 192 L232 136 L322 196 L400 170 V260 H0Z" fill="#4E5F69"/>
+    <path d="M0 260 V226 Q100 196 200 223 T400 216 V260Z" fill="#2E3A41"/>
+  </svg>`;
+}
+
+function wallPreview(key, w, h, variant, inner) {
+  const dark = variant === 'led';
+  return `<div class="relative aspect-[4/3] w-full rounded-2xl overflow-hidden ${dark ? 'bg-[#16191C]' : 'bg-sunk'}" ${dark ? 'style="--ink:#E9ECEC"' : ''}>
+    <div class="absolute inset-x-0 bottom-0 h-[13%] ${dark ? 'bg-[#0F1214]' : 'bg-line opacity-60'}"></div>
+    <div class="absolute left-1/2 top-[45%] -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-out" data-art="${key}">
+      <div class="dim-x"><span class="dim-tag" data-tag-w="${key}">${w} cm</span></div>
+      <div class="dim-y"><span class="dim-tag" data-tag-h="${key}">${h} cm</span></div>
+      <div class="art art-${variant}">${inner || art(key)}</div>
+    </div>
+  </div>`;
+}
+
+function sizeArt(key, w, h) {
+  const el = document.querySelector(`[data-art="${key}"]`);
+  if (!el) return;
+  const r = w / h, maxW = 0.74, maxH = 0.62 * 0.75; // w jednostkach szerokości kontenera 4:3
+  const bw = Math.min(maxW, maxH * r), bh = bw / r;
+  el.style.width = (bw * 100) + '%';
+  el.style.height = Math.max(bh / 0.75 * 100, 1.5) + '%';
+  const tw = document.querySelector(`[data-tag-w="${key}"]`), th = document.querySelector(`[data-tag-h="${key}"]`);
+  if (tw) tw.textContent = `${w} cm`;
+  if (th) th.textContent = `${h} cm`;
+}
+
+/* =====================================================================
+   KALKULATOR WYMIARÓW
+   ===================================================================== */
+function dimHTML(key, w, h) {
+  return ['w', 'h'].map(axis => {
+    const [min, max] = lim(axis), val = axis === 'w' ? w : h;
+    const label = axis === 'w' ? 'Szerokość' : 'Wysokość';
+    return `<div class="${axis === 'h' ? 'mt-5' : ''}">
+      <div class="flex items-center justify-between gap-3">
+        <label for="${key}-${axis}-num" class="text-sm font-medium">${label}</label>
+        <div class="flex items-center gap-2">
+          <input id="${key}-${axis}-num" class="dim-num num-input" data-key="${key}" data-axis="${axis}" type="number" inputmode="numeric" min="${min}" max="${max}" step="1" value="${val}">
+          <span class="text-sm text-muted">cm</span>
+        </div>
+      </div>
+      <input class="dim-range range" data-key="${key}" data-axis="${axis}" type="range" min="${min}" max="${max}" step="1" value="${val}" aria-label="${label} w centymetrach">
+      <div class="flex justify-between text-[11px] text-muted tabular-nums"><span>${min} cm</span><span>${max} cm</span></div>
+    </div>`;
+  }).join('');
+}
+
+function syncControls(key, skip) {
+  ['w', 'h'].forEach(axis => {
+    const v = dims[key][axis], [min, max] = lim(axis);
+    $$(`.dim-range[data-key="${key}"][data-axis="${axis}"]`).forEach(r => {
+      if (skip !== 'range') r.value = v;
+      r.style.setProperty('--fill', ((v - min) / (max - min) * 100) + '%');
+    });
+    if (skip !== 'num') $$(`.dim-num[data-key="${key}"][data-axis="${axis}"]`).forEach(n => n.value = v);
+  });
+}
+
+function paint(key) {
+  const d = dims[key]; if (!d) return;
+  sizeArt(key, d.w, d.h);
+  const pid = key === 'modal' ? state.productId : key;
+  const p = product(pid); if (!p) return;
+  $$(`[data-price="${key}"]`).forEach(e => e.textContent = fmt(price(p, d.w, d.h)));
+  $$(`[data-area="${key}"]`).forEach(e => e.textContent = area(d.w, d.h));
+}
+
+function setDim(key, axis, v, src) {
+  dims[key][axis] = v;
+  syncControls(key, src);
+  paint(key);
+  if (key === 'modal') {
+    state.w = dims.modal.w; state.h = dims.modal.h;
+    if (state.crop && state.crop.ratio !== state.w / state.h) state.crop = null;
+    dims[state.productId] = { ...dims.modal };
+    syncControls(state.productId); paint(state.productId);
+    renderFooter();
+  }
+}
+
+/* =====================================================================
+   LISTA PRODUKTÓW
+   ===================================================================== */
+function renderProducts() {
+  $('#product-list').innerHTML = PRODUCTS.map((p, i) => {
+    const d = dims[p.id];
+    return `<article id="p-${p.id}" class="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center py-12 lg:py-16 ${i ? 'border-t border-line' : ''}">
+      <div class="${i % 2 ? 'lg:order-2' : ''}">${wallPreview(p.id, d.w, d.h, p.id)}</div>
+      <div>
+        <h3 class="text-2xl sm:text-3xl font-semibold tracking-tight">${p.name}</h3>
+        <p class="mt-3 text-muted leading-relaxed max-w-prose">${p.desc}</p>
+        <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-1.5 text-sm">
+          ${p.features.map(f => `<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-[2px] bg-tape"></span>${f}</li>`).join('')}
+        </ul>
+        <div class="mt-7 rounded-2xl bg-wall border border-line p-5 sm:p-6">
+          ${dimHTML(p.id, d.w, d.h)}
+          <div class="mt-5 pt-5 border-t border-line flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <div class="text-xs text-muted tabular-nums" data-area="${p.id}"></div>
+              <div class="text-2xl font-semibold tabular-nums" data-price="${p.id}"></div>
+            </div>
+            <button class="btn-primary" data-configure="${p.id}">Wybierz grafikę</button>
+          </div>
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+  PRODUCTS.forEach(p => { syncControls(p.id); paint(p.id); });
+}
+
+/* =====================================================================
+   KONFIGURATOR – nawigacja
+   ===================================================================== */
+function lockScroll() {
+  const open = !$('#cfg').classList.contains('hidden') || !$('#cart').classList.contains('hidden');
+  document.documentElement.style.overflow = open ? 'hidden' : '';
+}
+
+function openCfg(pid, step = 2) {
+  state.productId = pid;
+  dims.modal = { ...dims[pid] };
+  state.w = dims.modal.w; state.h = dims.modal.h;
+  if (state.crop && state.crop.ratio !== state.w / state.h) state.crop = null;
+  $('#cfg-title').textContent = product(pid).name;
+  $('#cfg').classList.remove('hidden');
+  lockScroll();
+  state.step = 0;
+  goStep(step);
+}
+
+function closeCfg() {
+  destroyCropper();
+  $('#cfg').classList.add('hidden');
+  lockScroll();
+}
+
+function switchProduct(pid) {
+  state.productId = pid;
+  dims[pid] = { ...dims.modal };
+  syncControls(pid); paint(pid);
+  $('#cfg-title').textContent = product(pid).name;
+  renderStep(); renderFooter();
+}
+
+function goStep(n) {
+  if (state.step === 3 && n > 3 && !captureCrop()) return;
+  if (n >= 3 && !state.image) { n = 2; }
+  if (n === 4 && !state.crop) { n = 3; }
+  if (state.step === 3 && n !== 3) destroyCropper();
+  state.step = n;
+  renderStepper(); renderStep(); renderFooter();
+  $('#cfg-body').scrollTop = 0;
+}
+
+function renderStepper() {
+  $('#cfg-steps').innerHTML = STEPS.map((s, i) => {
+    const n = i + 1, done = n < state.step, cur = n === state.step;
+    return `<li class="flex items-center gap-2">${i ? '<span class="w-5 h-px bg-line"></span>' : ''}
+      <button ${done ? `data-goto="${n}"` : 'disabled'} class="flex items-center gap-2 ${cur ? 'font-semibold' : done ? 'hover:underline underline-offset-4' : 'text-muted'}">
+        <span class="grid place-items-center w-6 h-6 rounded-full text-xs tabular-nums ${cur ? 'bg-tape text-on-tape' : done ? 'bg-ink text-on-ink' : 'border border-line'}">${done ? '✓' : n}</span>${s}
+      </button></li>`;
+  }).join('');
+  $('#cfg-progress').style.width = (state.step / 4 * 100) + '%';
+  $('#cfg-step-label').textContent = `Krok ${state.step} z 4: ${STEPS[state.step - 1]}`;
+}
+
+function renderFooter() {
+  const p = product(state.productId);
+  const labels = { 1: 'Dalej: grafika', 2: 'Dalej: kadrowanie', 3: 'Dalej: podsumowanie' };
+  const next = $('#cfg-next');
+  next.innerHTML = state.step === 4 ? 'Dodaj do koszyka'
+    : `<span class="sm:hidden">Dalej</span><span class="hidden sm:inline">${labels[state.step]}</span>`;
+  next.disabled = state.step === 2 && !state.image;
+  $('#cfg-back').textContent = state.step === 1 ? 'Anuluj' : 'Wstecz';
+  $('#cfg-meta').textContent = `${state.w} × ${state.h} cm`;
+  $('#cfg-price').textContent = fmt(price(p, state.w, state.h));
+}
+
+function renderStep() {
+  const body = $('#cfg-body');
+  if (state.step === 1) {
+    body.innerHTML = step1();
+    syncControls('modal'); paint('modal');
+  } else if (state.step === 2) {
+    body.innerHTML = step2();
+    if (state.tab === 'unsplash') {
+      const o = orientationFor(state.w, state.h);
+      if (!state.search.q) searchUnsplash(TAGS[0], 1);
+      else if (o !== state.search.orientation && !state.search.loading) searchUnsplash(state.search.q, 1);
+      else renderGallery();
+    }
+  } else if (state.step === 3) {
+    body.innerHTML = step3();
+    initCropper();
+  } else if (state.step === 4) {
+    body.innerHTML = step4();
+    sizeArt('sum', state.w, state.h);
+  }
+}
+
+/* ---------- Krok 1: wymiary ---------- */
+function step1() {
+  const p = product(state.productId);
+  return `<div class="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center max-w-5xl mx-auto">
+    <div>${wallPreview('modal', state.w, state.h, p.id)}</div>
+    <div>
+      <div class="text-sm font-medium mb-3">Produkt</div>
+      <div class="flex flex-wrap gap-2 mb-8">
+        ${PRODUCTS.map(x => `<button data-switch="${x.id}" class="chip ${x.id === p.id ? '!bg-ink !text-on-ink !border-ink' : ''}">${x.name}</button>`).join('')}
+      </div>
+      ${dimHTML('modal', state.w, state.h)}
+      <div class="mt-6 pt-5 border-t border-line flex items-end justify-between gap-4">
+        <div><div class="text-xs text-muted tabular-nums" data-area="modal"></div>
+        <div class="text-2xl font-semibold tabular-nums" data-price="modal"></div></div>
+        <div class="text-xs text-muted">${fmtRate(p)}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---------- Krok 2: grafika ---------- */
+function step2() {
+  const tabCls = t => `rounded-full px-4 h-9 font-medium transition ${state.tab === t ? 'bg-surface shadow-sm' : 'text-muted hover:text-ink'}`;
+  const recommendedPx = Math.ceil(state.w / 2.54 * CONFIG.quality.good);
+  const head = `<div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+      <div><h3 class="text-xl font-semibold">Wybierz grafikę</h3>
+      <p class="mt-1 text-sm text-muted">Dopasujesz ją do formatu ${state.w} × ${state.h} cm w następnym kroku.</p></div>
+      <div class="inline-flex rounded-full bg-sunk p-1 text-sm">
+        <button data-tab="unsplash" class="${tabCls('unsplash')}">Galeria zdjęć</button>
+        <button data-tab="upload" class="${tabCls('upload')}">Własny plik</button>
+      </div>
+    </div>`;
+
+  if (state.tab === 'upload') {
+    return `<div class="max-w-5xl mx-auto">${head}
+      <label id="dropzone" for="file-input" class="flex flex-col items-center justify-center text-center gap-3 rounded-2xl border-2 border-dashed border-line bg-wall px-6 py-16 cursor-pointer transition hover:border-ink">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+        <span class="font-semibold">Przeciągnij plik tutaj albo kliknij, aby go wybrać</span>
+        <span class="text-sm text-muted max-w-md">JPG, PNG lub WEBP, do 60 MB. Dla ${state.w} cm szerokości najlepiej sprawdzi się plik o szerokości co najmniej ${recommendedPx.toLocaleString('pl-PL')} px.</span>
+        <input id="file-input" type="file" accept="image/jpeg,image/png,image/webp" class="sr-only">
+      </label>
+      ${state.image?.source === 'upload' ? `<p class="mt-4 text-sm">Wybrany plik: <span class="font-medium">${esc(state.image.fileName)}</span></p>` : ''}
+    </div>`;
+  }
+
+  return `<div class="max-w-5xl mx-auto">${head}
+    <form id="search-form" class="flex gap-2" role="search">
+      <div class="relative flex-1">
+        <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-muted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="search-input" type="search" value="${esc(state.search.q)}" placeholder="Czego szukasz? Np. góry, beton, liście" class="w-full h-12 rounded-full border border-line bg-surface pl-11 pr-4 outline-none focus:border-ink" aria-label="Szukaj zdjęć">
+      </div>
+      <button class="btn-primary h-12 px-6" type="submit">Szukaj</button>
+    </form>
+    <div class="mt-3 flex flex-wrap gap-2">${TAGS.map(t => `<button data-tag="${t}" class="chip">${t}</button>`).join('')}</div>
+    <div id="gallery" class="mt-6"></div>
+    <p class="mt-6 text-xs text-muted">Zdjęcia pochodzą z serwisu <a class="underline underline-offset-2" href="https://unsplash.com/${utm}" target="_blank" rel="noopener">Unsplash</a>.</p>
+  </div>`;
+}
+
+function orientationFor(w, h) { const r = w / h; return r > 1.25 ? 'landscape' : r < 0.8 ? 'portrait' : 'squarish'; }
+
+function unsplashSearchURL(q, page, orientation) {
+  const p = new URLSearchParams({ query: q, page, per_page: CONFIG.unsplash.perPage, orientation, content_filter: 'high', lang: 'pl' });
+  if (CONFIG.unsplash.proxy) return `${CONFIG.unsplash.proxy}/search?${p}`;
+  p.set('client_id', CONFIG.unsplash.accessKey);
+  return `https://api.unsplash.com/search/photos?${p}`;
+}
+
+const mapPhoto = r => ({
+  id: r.id, w: r.width, h: r.height, color: r.color || '#ccc',
+  thumb: r.urls.small, regular: r.urls.regular, raw: r.urls.raw,
+  alt: r.alt_description || r.description || 'Zdjęcie z Unsplash',
+  author: r.user?.name || 'Autor', authorUrl: (r.user?.links?.html || 'https://unsplash.com') + utm,
+  downloadLocation: r.links?.download_location
+});
+
+async function searchUnsplash(q, page = 1) {
+  const s = state.search;
+  s.q = q; s.page = page; s.loading = true; s.error = null;
+  s.orientation = orientationFor(state.w, state.h);
+  if (page === 1) s.results = [];
+  renderGallery();
+  try {
+    const res = await fetch(unsplashSearchURL(q, page, s.orientation));
+    if (!res.ok) throw new Error(
+      res.status === 403 ? 'Wyczerpano godzinny limit zapytań do Unsplash. Spróbuj ponownie za kilka minut albo prześlij własny plik.' :
+      res.status === 401 ? 'Klucz API Unsplash jest nieprawidłowy. Sprawdź CONFIG.unsplash.accessKey.' :
+      'Nie udało się pobrać zdjęć. Sprawdź połączenie i spróbuj ponownie.');
+    const data = await res.json();
+    const mapped = (data.results || []).map(mapPhoto);
+    s.results = page === 1 ? mapped : s.results.concat(mapped);
+    s.totalPages = data.total_pages || 1;
+  } catch (e) {
+    s.error = e.message || 'Nie udało się pobrać zdjęć.';
+  } finally {
+    s.loading = false;
+    renderGallery();
+  }
+}
+
+function renderGallery() {
+  const el = $('#gallery'); if (!el) return;
+  const s = state.search;
+  if (s.error) { el.innerHTML = `<p class="rounded-xl border border-line bg-wall px-4 py-6 text-sm">${esc(s.error)}</p>`; return; }
+  if (!s.results.length && s.loading) {
+    el.innerHTML = `<div class="gallery">${Array.from({ length: 8 }, (_, i) => `<div class="mb-3 rounded-xl bg-sunk animate-pulse" style="height:${120 + (i % 3) * 50}px"></div>`).join('')}</div>`;
+    return;
+  }
+  if (!s.results.length) { el.innerHTML = `<p class="text-sm text-muted py-6">Brak zdjęć dla „${esc(s.q)}”. Spróbuj innego słowa, np. po angielsku.</p>`; return; }
+  const selected = state.image?.source === 'unsplash' ? state.image.photo.id : null;
+  el.innerHTML = `<div class="gallery">${s.results.map((p, i) => `
+      <button data-photo="${i}" class="group relative mb-3 block w-full overflow-hidden rounded-xl break-inside-avoid ${p.id === selected ? 'ring-4 ring-tape' : ''}" style="background:${esc(p.color)};aspect-ratio:${p.w}/${p.h}" aria-label="Wybierz: ${esc(p.alt)}">
+        <img src="${esc(p.thumb)}" alt="${esc(p.alt)}" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-[1.03]">
+        <span class="absolute inset-x-0 bottom-0 p-2 text-left text-[11px] text-white bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition">${esc(p.author)}</span>
+      </button>`).join('')}</div>
+    <div class="mt-4 text-center">
+      ${s.loading ? '<span class="text-sm text-muted">Wczytywanie zdjęć…</span>'
+        : s.page < s.totalPages ? '<button id="load-more" class="btn-ghost">Pokaż więcej zdjęć</button>' : ''}
+    </div>`;
+}
+
+function choosePhoto(i) {
+  const p = state.search.results[i]; if (!p) return;
+  releaseUpload();
+  state.image = { source: 'unsplash', src: p.regular, photo: p, origW: p.w, origH: p.h };
+  state.crop = null;
+  goStep(3);
+}
+
+function releaseUpload() {
+  if (state.image?.objectUrl) URL.revokeObjectURL(state.image.objectUrl);
+}
+
+function handleFile(file) {
+  if (!file) return;
+  if (!/^image\/(jpeg|png|webp)$/.test(file.type)) return toast('Ten format nie jest obsługiwany. Wybierz plik JPG, PNG lub WEBP.', 'error');
+  if (file.size > 60 * 1024 * 1024) return toast('Plik ma ponad 60 MB. Zmniejsz go albo napisz do nas – przyjmiemy go mailem.', 'error');
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.onload = () => {
+    releaseUpload();
+    state.image = { source: 'upload', src: url, objectUrl: url, origW: img.naturalWidth, origH: img.naturalHeight, fileName: file.name };
+    state.crop = null;
+    goStep(3);
+  };
+  img.onerror = () => { URL.revokeObjectURL(url); toast('Nie udało się otworzyć pliku. Sprawdź, czy nie jest uszkodzony.', 'error'); };
+  img.src = url;
+}
+
+/* ---------- Krok 3: kadrowanie ---------- */
+function attribution() {
+  const im = state.image;
+  if (!im) return '';
+  if (im.source === 'upload') return `Własny plik: ${esc(im.fileName)}`;
+  return `Fot. <a class="underline underline-offset-2" href="${esc(im.photo.authorUrl)}" target="_blank" rel="noopener">${esc(im.photo.author)}</a> / <a class="underline underline-offset-2" href="https://unsplash.com/${utm}" target="_blank" rel="noopener">Unsplash</a>`;
+}
+
+function step3() {
+  return `<div class="max-w-5xl mx-auto">
+    <div class="flex flex-wrap items-end justify-between gap-4 mb-5">
+      <div><h3 class="text-xl font-semibold">Dopasuj kadr</h3>
+      <p class="mt-1 text-sm text-muted">Przesuwaj zdjęcie i zmieniaj wielkość ramki. Proporcje ${state.w} × ${state.h} cm są zablokowane.</p></div>
+      <div class="flex gap-2">
+        <button class="icon-btn" data-crop="out" aria-label="Pomniejsz"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+        <button class="icon-btn" data-crop="in" aria-label="Powiększ"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+        <button class="btn-ghost h-10" data-crop="reset">Resetuj kadr</button>
+      </div>
+    </div>
+    <div class="rounded-2xl overflow-hidden bg-[#111416] h-[46vh] min-h-[280px]">
+      <img id="crop-img" alt="Kadrowanie grafiki" class="block max-w-full">
+    </div>
+    <div id="quality" class="mt-4"></div>
+    <div class="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-muted">
+      <span>${attribution()}</span>
+      <button data-goto="2" class="underline underline-offset-2 hover:text-ink">Wybierz inną grafikę</button>
+    </div>
+  </div>`;
+}
+
+function initCropper() {
+  const img = $('#crop-img'); if (!img || !state.image) return;
+  destroyCropper();
+  if (state.image.source === 'unsplash') img.crossOrigin = 'anonymous';
+  img.onload = () => {
+    img.onload = null;
+    const ratio = state.w / state.h;
+    cropper = new Cropper(img, {
+      aspectRatio: ratio, viewMode: 1, dragMode: 'move', autoCropArea: 1,
+      background: false, responsive: true, restore: false, checkOrientation: false,
+      toggleDragModeOnDblclick: false,
+      ready() {
+        if (state.crop && state.crop.ratio === ratio) cropper.setData(state.crop.imgData);
+        updateQuality();
+      },
+      crop: scheduleQuality
+    });
+  };
+  img.onerror = () => toast('Nie udało się wczytać zdjęcia do kadrowania. Wybierz inne.', 'error');
+  img.src = state.image.src;
+}
+
+function destroyCropper() { if (cropper) { cropper.destroy(); cropper = null; } }
+
+function cropAction(a) {
+  if (!cropper) return;
+  if (a === 'in') cropper.zoom(0.1);
+  else if (a === 'out') cropper.zoom(-0.1);
+  else if (a === 'reset') cropper.reset();
+}
+
+function cropMetrics() {
+  if (!cropper) return null;
+  const d = cropper.getData(true);
+  const nat = cropper.getImageData().naturalWidth || 1;
+  const scale = state.image.origW / nat;        // przelicznik do oryginalnej rozdzielczości
+  const ow = d.width * scale, oh = d.height * scale;
+  return { d, scale, ow, oh, dpi: Math.round(ow / (state.w / 2.54)) };
+}
+
+function quality(dpi) {
+  const q = CONFIG.quality;
+  if (dpi >= q.good) return { label: 'bardzo dobra', color: '#2F9E6B', hint: '' };
+  if (dpi >= q.ok) return { label: 'dobra', color: '#E0A800', hint: 'Wystarczy przy dużym formacie oglądanym z odległości kilku kroków.' };
+  return { label: 'niska', color: '#D64545', hint: 'Wydruk może być nieostry. Wybierz zdjęcie o większej rozdzielczości, zmniejsz wymiar albo poszerz kadr.' };
+}
+
+let qRaf = 0;
+function scheduleQuality() { cancelAnimationFrame(qRaf); qRaf = requestAnimationFrame(updateQuality); }
+function updateQuality() {
+  const m = cropMetrics(), el = $('#quality');
+  if (!m || !el) return;
+  const q = quality(m.dpi);
+  el.innerHTML = `<div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 rounded-xl border border-line bg-wall px-4 py-3 text-sm">
+    <span class="inline-flex items-center gap-2 font-semibold"><span class="w-2.5 h-2.5 rounded-full" style="background:${q.color}"></span>Jakość druku: ${q.label}</span>
+    <span class="text-muted tabular-nums">${Math.round(m.ow).toLocaleString('pl-PL')} × ${Math.round(m.oh).toLocaleString('pl-PL')} px na ${state.w} × ${state.h} cm (${m.dpi} dpi)</span>
+    ${q.hint ? `<span class="w-full text-muted">${q.hint}</span>` : ''}
+  </div>`;
+}
+
+function captureCrop() {
+  const m = cropMetrics();
+  if (!m) { toast('Zdjęcie jeszcze się wczytuje. Spróbuj za chwilę.'); return false; }
+  let preview;
+  try {
+    const canvas = cropper.getCroppedCanvas({ maxWidth: 900, maxHeight: 900, fillColor: '#fff', imageSmoothingQuality: 'high' });
+    preview = canvas.toDataURL('image/jpeg', 0.82);
+  } catch (e) {
+    toast('Nie udało się przygotować podglądu tego zdjęcia. Wybierz inne.', 'error');
+    return false;
+  }
+  const s = m.scale, im = state.image;
+  const rect = {
+    x: clamp(Math.round(m.d.x * s), 0, im.origW), y: clamp(Math.round(m.d.y * s), 0, im.origH),
+    width: Math.min(Math.round(m.ow), im.origW), height: Math.min(Math.round(m.oh), im.origH)
+  };
+  state.crop = { imgData: cropper.getData(), ratio: state.w / state.h, rect, dpi: m.dpi };
+  state.preview = preview;
+  return true;
+}
+
+/* ---------- Krok 4: podsumowanie ---------- */
+function step4() {
+  const p = product(state.productId), q = quality(state.crop.dpi);
+  const row = (label, value, go) => `<div class="flex items-start justify-between gap-4 py-3">
+      <dt class="text-muted">${label}</dt>
+      <dd class="text-right font-medium">${value}${go ? ` <button data-goto="${go}" class="ml-2 text-xs font-normal text-muted underline underline-offset-2 hover:text-ink">Zmień</button>` : ''}</dd></div>`;
+  const img = `<img src="${state.preview}" alt="Podgląd wybranej grafiki" class="block w-full h-full object-cover">`;
+  return `<div class="grid lg:grid-cols-[1.25fr_1fr] gap-8 lg:gap-14 items-start max-w-5xl mx-auto">
+    <div>
+      ${wallPreview('sum', state.w, state.h, p.id, img)}
+      <p class="mt-3 text-xs text-muted">Podgląd poglądowy. Kolory wydruku mogą nieznacznie różnić się od tych na ekranie.</p>
+    </div>
+    <div>
+      <h3 class="text-xl font-semibold">Twoja konfiguracja</h3>
+      <dl class="mt-4 divide-y divide-line border-y border-line text-sm">
+        ${row('Produkt', p.name, 1)}
+        ${row('Wymiary', `<span class="tabular-nums">${state.w} × ${state.h} cm</span>`, 1)}
+        ${row('Powierzchnia', area(state.w, state.h).replace('Powierzchnia ', ''))}
+        ${row('Grafika', attribution(), 2)}
+        ${row('Jakość druku', `<span class="inline-flex items-center gap-2"><span class="w-2 h-2 rounded-full" style="background:${q.color}"></span>${q.label} (${state.crop.dpi} dpi)</span>`, 3)}
+      </dl>
+      <div class="mt-6 flex items-end justify-between">
+        <span class="text-sm text-muted">Cena</span>
+        <span class="text-3xl font-semibold tabular-nums">${fmt(price(p, state.w, state.h))}</span>
+      </div>
+      <p class="mt-2 text-xs text-muted">Koszt dostawy zobaczysz przy płatności.</p>
+    </div>
+  </div>`;
+}
+
+/* =====================================================================
+   KOSZYK
+   ===================================================================== */
+function loadCart() {
+  try { return JSON.parse(localStorage.getItem(CONFIG.storageKey)) || []; } catch (e) { return []; }
+}
+function saveCart() {
+  try { localStorage.setItem(CONFIG.storageKey, JSON.stringify(cart)); }
+  catch (e) {
+    try { localStorage.setItem(CONFIG.storageKey, JSON.stringify(cart.map(i => ({ ...i, preview: null })))); } catch (_) {}
+  }
+}
+const cartTotal = () => Math.round(cart.reduce((s, i) => s + i.unitPrice * i.qty, 0) * 100) / 100;
+
+function printUrl(photo, r) {
+  const sep = photo.raw.includes('?') ? '&' : '?';
+  return `${photo.raw}${sep}rect=${r.x},${r.y},${r.width},${r.height}&fm=jpg&q=92`;
+}
+
+function trackUnsplashDownload(photo) {
+  // Wymagane przez zasady API Unsplash przy użyciu zdjęcia
+  if (!photo?.downloadLocation) return;
+  const u = CONFIG.unsplash.proxy
+    ? `${CONFIG.unsplash.proxy}/download?location=${encodeURIComponent(photo.downloadLocation)}`
+    : `${photo.downloadLocation}${photo.downloadLocation.includes('?') ? '&' : '?'}client_id=${CONFIG.unsplash.accessKey}`;
+  fetch(u).catch(() => {});
+}
+
+function addToCart() {
+  const p = product(state.productId), im = state.image, r = state.crop.rect;
+  const graphic = im.source === 'unsplash'
+    ? { source: 'unsplash', photoId: im.photo.id, author: im.photo.author, authorUrl: im.photo.authorUrl, printUrl: printUrl(im.photo, r), crop: r }
+    : { source: 'upload', fileName: im.fileName, originalSize: { w: im.origW, h: im.origH }, crop: r };
+  cart.push({
+    uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    productId: p.id, name: p.name, w: state.w, h: state.h,
+    unitPrice: price(p, state.w, state.h), qty: 1,
+    dpi: state.crop.dpi, graphic, preview: state.preview
+  });
+  if (im.source === 'unsplash') trackUnsplashDownload(im.photo);
+  saveCart(); renderCart();
+  closeCfg(); openCart();
+  toast('Dodano do koszyka');
+}
+
+function graphicLabel(i) {
+  return i.graphic?.source === 'unsplash' ? `Fot. ${i.graphic.author} / Unsplash` : `Własny plik: ${i.graphic?.fileName || ''}`;
+}
+
+function renderCart() {
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+  const badge = $('#cart-count');
+  badge.textContent = count;
+  badge.classList.toggle('hidden', !count);
+
+  $('#cart-items').innerHTML = !cart.length
+    ? `<div class="h-full grid place-items-center text-center px-6"><div>
+        <p class="font-semibold">Koszyk jest pusty</p>
+        <p class="mt-1 text-sm text-muted">Podaj wymiar produktu, wybierz grafikę i dodaj ją tutaj.</p>
+        <a href="#produkty" data-close-cart class="btn-ghost mt-5">Zobacz produkty</a>
+      </div></div>`
+    : cart.map(i => `<div class="flex gap-4 py-5 border-b border-line">
+        <div class="w-20 h-20 shrink-0 rounded-lg bg-sunk overflow-hidden grid place-items-center">
+          ${i.preview ? `<img src="${i.preview}" alt="" class="max-w-full max-h-full object-contain">` : ''}
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex justify-between gap-3">
+            <p class="font-semibold truncate">${esc(i.name)}</p>
+            <button data-remove="${i.uid}" class="text-xs text-muted underline underline-offset-2 hover:text-ink shrink-0">Usuń</button>
+          </div>
+          <p class="text-sm text-muted tabular-nums">${i.w} × ${i.h} cm</p>
+          <p class="text-xs text-muted truncate">${esc(graphicLabel(i))}</p>
+          <div class="mt-3 flex items-center justify-between">
+            <div class="inline-flex items-center rounded-full border border-line">
+              <button data-qty="${i.uid}" data-d="-1" class="w-8 h-8 text-lg leading-none" aria-label="Zmniejsz ilość">−</button>
+              <span class="w-6 text-center text-sm tabular-nums">${i.qty}</span>
+              <button data-qty="${i.uid}" data-d="1" class="w-8 h-8 text-lg leading-none" aria-label="Zwiększ ilość">+</button>
+            </div>
+            <span class="font-semibold tabular-nums">${fmt(Math.round(i.unitPrice * i.qty * 100) / 100)}</span>
+          </div>
+        </div>
+      </div>`).join('');
+
+  $('#cart-total').textContent = fmt(cartTotal());
+  $('#checkout').disabled = !cart.length;
+}
+
+function changeQty(uid, d) {
+  const it = cart.find(i => i.uid === uid); if (!it) return;
+  it.qty = clamp(it.qty + d, 1, 20);
+  saveCart(); renderCart();
+}
+function removeItem(uid) { cart = cart.filter(i => i.uid !== uid); saveCart(); renderCart(); }
+
+function openCart() {
+  $('#cart').classList.remove('hidden'); lockScroll();
+  requestAnimationFrame(() => requestAnimationFrame(() => $('#cart-panel').classList.remove('translate-x-full')));
+}
+function closeCart() {
+  $('#cart-panel').classList.add('translate-x-full');
+  setTimeout(() => { $('#cart').classList.add('hidden'); lockScroll(); }, 280);
+}
+
+/* =====================================================================
+   PŁATNOŚĆ – PLACEHOLDER PRZELEWY24
+   ===================================================================== */
+async function startCheckout() {
+  if (!cart.length) return;
+  const order = {
+    id: 'TW-' + Date.now().toString(36).toUpperCase(),
+    createdAt: new Date().toISOString(),
+    currency: 'PLN',
+    total: cartTotal(),
+    items: cart.map(({ preview, ...item }) => item) // bez podglądów base64
+  };
+  console.log('[TextileWall] Zamówienie do wysłania:', order);
+
+  /* ===== TU PODŁĄCZYSZ PRZELEWY24 =====
+     Klucze (merchantId, posId, CRC, klucz API) trzymaj WYŁĄCZNIE po stronie serwera (funkcja Vercel).
+
+     1. Front wysyła zamówienie + dane klienta:
+        const res = await fetch('/api/p24/register', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ order, customer: { email, name, address } })
+        });
+        const { token } = await res.json();
+        window.location.href = `https://secure.przelewy24.pl/trnRequest/${token}`;
+        // sandbox: https://sandbox.przelewy24.pl/trnRequest/${token}
+
+     2. /api/p24/register (Vercel Function):
+        - przelicza cenę po stronie serwera (nigdy nie ufaj cenie z przeglądarki),
+        - zapisuje zamówienie (np. Vercel Postgres / KV),
+        - liczy sign = SHA-384 z JSON {sessionId, merchantId, amount, currency, crc} (amount w groszach),
+        - POST /api/v1/transaction/register → zwraca token.
+
+     3. /api/p24/notify (urlStatus): weryfikuje płatność przez PUT /api/v1/transaction/verify.
+
+     Uwaga: pliki przesłane przez klienta są na razie tylko w jego przeglądarce –
+     przed płatnością trzeba je wysłać na serwer (np. Vercel Blob) i dołączyć adres do zamówienia.
+  */
+
+  toast(`Zamówienie ${order.id} na ${fmt(order.total)} jest gotowe. Płatności Przelewy24 zostaną podłączone wkrótce.`);
+}
+
+/* =====================================================================
+   ZDARZENIA
+   ===================================================================== */
+document.addEventListener('click', e => {
+  const t = e.target.closest('button, a, [data-close-cfg], [data-close-cart]');
+  if (!t) return;
+  const ds = t.dataset;
+  if (ds.configure) return openCfg(ds.configure, 2);
+  if ('closeCfg' in ds) return closeCfg();
+  if ('closeCart' in ds) return closeCart();
+  if (t.id === 'cart-open') return openCart();
+  if (t.id === 'cfg-next') return state.step < 4 ? goStep(state.step + 1) : addToCart();
+  if (t.id === 'cfg-back') return state.step === 1 ? closeCfg() : goStep(state.step - 1);
+  if (ds.goto) return goStep(+ds.goto);
+  if (ds.switch) return switchProduct(ds.switch);
+  if (ds.tab) { state.tab = ds.tab; return renderStep(); }
+  if (ds.tag) { const inp = $('#search-input'); if (inp) inp.value = ds.tag; return searchUnsplash(ds.tag, 1); }
+  if (ds.photo !== undefined) return choosePhoto(+ds.photo);
+  if (t.id === 'load-more') return searchUnsplash(state.search.q, state.search.page + 1);
+  if (ds.crop) return cropAction(ds.crop);
+  if (ds.qty) return changeQty(ds.qty, +ds.d);
+  if (ds.remove) return removeItem(ds.remove);
+  if (t.id === 'checkout') return startCheckout();
+});
+
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (t.matches('.dim-range')) setDim(t.dataset.key, t.dataset.axis, parseInt(t.value, 10), 'range');
+  else if (t.matches('.dim-num')) {
+    const v = parseInt(t.value, 10), [min, max] = lim(t.dataset.axis);
+    if (v >= min && v <= max) setDim(t.dataset.key, t.dataset.axis, v, 'num');
+  }
+});
+
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.matches('.dim-num')) {
+    const [min, max] = lim(t.dataset.axis);
+    let v = parseInt(t.value, 10);
+    if (isNaN(v)) v = dims[t.dataset.key][t.dataset.axis];
+    v = clamp(v, min, max);
+    if (+t.value !== v) toast(`Dopuszczalny zakres to ${min}–${max} cm. Większe formaty wycenimy indywidualnie.`);
+    t.value = v;
+    setDim(t.dataset.key, t.dataset.axis, v);
+  }
+  if (t.id === 'file-input') handleFile(t.files[0]);
+});
+
+document.addEventListener('submit', e => {
+  if (e.target.id !== 'search-form') return;
+  e.preventDefault();
+  const q = $('#search-input').value.trim();
+  if (q) searchUnsplash(q, 1);
+});
+
+['dragenter', 'dragover'].forEach(ev => document.addEventListener(ev, e => {
+  const dz = e.target.closest?.('#dropzone');
+  if (dz) { e.preventDefault(); dz.classList.add('!border-ink'); }
+}));
+document.addEventListener('dragleave', e => { const dz = e.target.closest?.('#dropzone'); if (dz) dz.classList.remove('!border-ink'); });
+document.addEventListener('drop', e => {
+  const dz = e.target.closest?.('#dropzone');
+  if (dz) { e.preventDefault(); dz.classList.remove('!border-ink'); handleFile(e.dataTransfer.files[0]); }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if (!$('#cart').classList.contains('hidden')) closeCart();
+  else if (!$('#cfg').classList.contains('hidden')) closeCfg();
+});
+
+/* =====================================================================
+   START
+   ===================================================================== */
+$('#hero-wall').innerHTML = wallPreview('hero', 250, 180, 'tapeta');
+sizeArt('hero', 250, 180);
+renderProducts();
+renderCart();
+$('#year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
