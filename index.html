@@ -269,7 +269,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
 <script>
 /* =====================================================================
-   KONFIGURACJA – tu zmieniasz ceny, limity i klucze
+   KONFIGURACJA – tu zmieniasz limity i klucze (ceny liczy serwer, patrz /api/price)
    ===================================================================== */
 const CONFIG = {
   unsplash: {
@@ -285,18 +285,18 @@ const CONFIG = {
   storageKey: 'tw_cart_v1'
 };
 
-// Ceny tymczasowe: zł za 1 cm². Formułę zmienisz w funkcji price().
+// Ceny NIE są trzymane w tym pliku – liczy je serwer (/api/price).
 const PRODUCTS = [
-  { id: 'tapeta', name: 'Tapeta 2.0', pricePerCm2: 1, defaultW: 250, defaultH: 180,
+  { id: 'tapeta', name: 'Tapeta 2.0', defaultW: 250, defaultH: 180,
     desc: 'Grafika na tkaninie naciągnięta na aluminiowy profil – od ściany do ściany. Bez kleju i bez niszczenia tynku, więc sprawdzi się także w wynajmowanym mieszkaniu.',
     features: ['Aluminiowy profil', 'Montaż w kilka minut', 'Wymienna grafika'] },
-  { id: 'ramka', name: 'Ramki na ścianę', pricePerCm2: 1, defaultW: 120, defaultH: 80,
+  { id: 'ramka', name: 'Ramki na ścianę', defaultW: 120, defaultH: 80,
     desc: 'Grafika w smukłej aluminiowej ramie, wykonana na Twój wymiar. Wygląda jak obraz, a format dobierasz co do centymetra.',
     features: ['Smukła rama', 'Gotowa do powieszenia', 'Dowolny format'] },
-  { id: 'led', name: 'Podświetlane ramki na ścianę', pricePerCm2: 3, defaultW: 100, defaultH: 70,
+  { id: 'led', name: 'Podświetlane ramki na ścianę', defaultW: 100, defaultH: 70,
     desc: 'Rama z równomiernym podświetleniem LED od tyłu. Grafika świeci pełnym kolorem i staje się źródłem światła w pomieszczeniu.',
     features: ['Podświetlenie LED', 'Tkanina przepuszczająca światło', 'Wymienna grafika'] },
-  { id: 'tkanina', name: 'Dodatkowa tkanina', pricePerCm2: 0.7, defaultW: 250, defaultH: 180,
+  { id: 'tkanina', name: 'Dodatkowa tkanina', defaultW: 250, defaultH: 180,
     desc: 'Sam wydruk na tkaninie do systemu TextileWall, który już masz. Zdejmujesz starą grafikę, wpinasz nową i nowa aranżacja jest gotowa.',
     features: ['Bez ramy', 'Pasuje do posiadanego systemu', 'Zmiana w kilka minut'] }
 ];
@@ -315,13 +315,45 @@ const product = id => PRODUCTS.find(p => p.id === id);
 const lim = axis => axis === 'w' ? [CONFIG.limits.minW, CONFIG.limits.maxW] : [CONFIG.limits.minH, CONFIG.limits.maxH];
 const utm = `?utm_source=${CONFIG.unsplash.appName}&utm_medium=referral`;
 
-function price(p, w, h) { return Math.round(w * h * p.pricePerCm2 * 100) / 100; }
+/* ===== CENY – liczone na serwerze (/api/price); w tym pliku nie ma żadnego cennika ===== */
+const priceCache = new Map();                 // "tapeta|250|180" → cena brutto w zł
+const priceKey = (id, w, h) => `${id}|${w}|${h}`;
+
+async function fetchPrice(id, w, h) {
+  const k = priceKey(id, w, h);
+  if (priceCache.has(k)) return priceCache.get(k);
+  const res = await fetch(`/api/price?product=${encodeURIComponent(id)}&w=${w}&h=${h}`);
+  if (!res.ok) throw new Error('price ' + res.status);
+  const { price } = await res.json();
+  priceCache.set(k, price);
+  return price;
+}
+
+// Wpisuje cenę w elementy pasujące do selektora (od razu z cache albo po odpowiedzi serwera).
+const priceSeq = {};
+function showPrice(selector, id, w, h) {
+  const seq = priceSeq[selector] = (priceSeq[selector] || 0) + 1;   // głos ma tylko najnowsze zapytanie
+  const set = t => { if (priceSeq[selector] === seq) $$(selector).forEach(e => { e.textContent = t; }); };
+  const hit = priceCache.get(priceKey(id, w, h));
+  if (hit !== undefined) return set(fmt(hit));
+  set('…');
+  fetchPrice(id, w, h).then(v => set(fmt(v))).catch(() => set('—'));
+}
+
+// Wersja dla suwaków: czeka 150 ms, żeby nie pytać serwera o każdy piksel przesunięcia.
+const priceTimers = {};
+function updatePrices(key, id) {
+  const { w, h } = dims[key];
+  clearTimeout(priceTimers[key]);
+  const sel = `[data-price="${key}"]`;
+  if (priceCache.has(priceKey(id, w, h))) return showPrice(sel, id, w, h);
+  priceTimers[key] = setTimeout(() => showPrice(sel, id, w, h), 150);
+}
 function fmt(n) {
   return new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN',
     minimumFractionDigits: Number.isInteger(n) ? 0 : 2, maximumFractionDigits: 2 }).format(n);
 }
 function area(w, h) { return `Powierzchnia ${(w * h / 10000).toLocaleString('pl-PL', { maximumFractionDigits: 2 })} m²`; }
-function fmtRate(p) { return `${String(p.pricePerCm2).replace('.', ',')} zł za cm²`; }
 
 function toast(msg, type = 'info') {
   const t = document.createElement('div');
@@ -426,7 +458,7 @@ function paint(key) {
   sizeArt(key, d.w, d.h);
   const pid = key === 'modal' ? state.productId : key;
   const p = product(pid); if (!p) return;
-  $$(`[data-price="${key}"]`).forEach(e => e.textContent = fmt(price(p, d.w, d.h)));
+  updatePrices(key, p.id);
   $$(`[data-area="${key}"]`).forEach(e => e.textContent = area(d.w, d.h));
 }
 
@@ -538,7 +570,7 @@ function renderFooter() {
   next.disabled = state.step === 2 && !state.image;
   $('#cfg-back').textContent = state.step === 1 ? 'Anuluj' : 'Wstecz';
   $('#cfg-meta').textContent = `${state.w} × ${state.h} cm`;
-  $('#cfg-price').textContent = fmt(price(p, state.w, state.h));
+  showPrice('#cfg-price, #sum-price', p.id, state.w, state.h);
 }
 
 function renderStep() {
@@ -577,7 +609,6 @@ function step1() {
       <div class="mt-6 pt-5 border-t border-line flex items-end justify-between gap-4">
         <div><div class="text-xs text-muted tabular-nums" data-area="modal"></div>
         <div class="text-2xl font-semibold tabular-nums" data-price="modal"></div></div>
-        <div class="text-xs text-muted">${fmtRate(p)}</div>
       </div>
     </div>
   </div>`;
@@ -846,7 +877,7 @@ function step4() {
       </dl>
       <div class="mt-6 flex items-end justify-between">
         <span class="text-sm text-muted">Cena</span>
-        <span class="text-3xl font-semibold tabular-nums">${fmt(price(p, state.w, state.h))}</span>
+        <span id="sum-price" class="text-3xl font-semibold tabular-nums">…</span>
       </div>
       <p class="mt-2 text-xs text-muted">Koszt dostawy zobaczysz przy płatności.</p>
     </div>
@@ -883,13 +914,15 @@ function trackUnsplashDownload(photo) {
 
 function addToCart() {
   const p = product(state.productId), im = state.image, r = state.crop.rect;
+  const unit = priceCache.get(priceKey(p.id, state.w, state.h));
+  if (unit === undefined) return toast('Nie udało się pobrać ceny. Spróbuj ponownie za chwilę.', 'error');
   const graphic = im.source === 'unsplash'
     ? { source: 'unsplash', photoId: im.photo.id, author: im.photo.author, authorUrl: im.photo.authorUrl, printUrl: printUrl(im.photo, r), crop: r }
     : { source: 'upload', fileName: im.fileName, originalSize: { w: im.origW, h: im.origH }, crop: r };
   cart.push({
     uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
     productId: p.id, name: p.name, w: state.w, h: state.h,
-    unitPrice: price(p, state.w, state.h), qty: 1,
+    unitPrice: unit, qty: 1,
     dpi: state.crop.dpi, graphic, preview: state.preview
   });
   if (im.source === 'unsplash') trackUnsplashDownload(im.photo);
