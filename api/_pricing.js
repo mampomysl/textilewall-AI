@@ -5,7 +5,7 @@
 // {"tapeta":{"profilePerMeter":20,"areaPerM2":120},
 //  "ramka":{"profilePerMeter":28.87,"areaPerM2":120,"fixedPerItem":119}}
 //
-// profilePerMeter – cena brutto 1 mb profilu (zł), areaPerM2 – cena brutto 1 m² grafiki (zł),
+// profilePerMeter – cena brutto 1 mb profilu (zł; pomiń dla samych wydruków), areaPerM2 – cena brutto 1 m² grafiki (zł),
 // fixedPerItem (opcjonalnie) – stała dopłata brutto do każdej sztuki, np. łączniki i akcesoria (zł)
 //
 // Produkt wyceniany z tabeli (mapa cen) – np. podświetlane ramki:
@@ -56,7 +56,7 @@ function priceInGrosze(productId, w, h) {
   if (rates.grid) return gridPriceInGrosze(rates.grid, w, h);
   if (w < LIMITS.minW || w > LIMITS.maxW || h < LIMITS.minH || h > LIMITS.maxH) return null;
 
-  const profileGr = Math.round(rates.profilePerMeter * 100); // grosze za 1 mb profilu
+  const profileGr = Math.round((rates.profilePerMeter || 0) * 100); // grosze za 1 mb profilu (0 = produkt bez profilu)
   const areaGr = Math.round(rates.areaPerM2 * 100);          // grosze za 1 m² grafiki
   const fixedGr = Math.round((rates.fixedPerItem || 0) * 100);  // stała dopłata za sztukę
   if (!Number.isFinite(profileGr) || !Number.isFinite(areaGr) || !Number.isFinite(fixedGr)) return null;
