@@ -316,7 +316,8 @@ const PRODUCTS = [
   { id: 'ramka', name: 'Ramki na ścianę', defaultW: 120, defaultH: 80,
     desc: 'Grafika w smukłej aluminiowej ramie, wykonana na Twój wymiar. Wygląda jak obraz, a format dobierasz co do centymetra.',
     features: ['Smukła rama', 'Gotowa do powieszenia', 'Dowolny format'] },
-  { id: 'led', name: 'Podświetlane ramki na ścianę', defaultW: 100, defaultH: 70,
+  { id: 'led', name: 'Podświetlane ramki na ścianę', defaultW: 140, defaultH: 100,
+    limits: { minW: 100, maxW: 600, minH: 100, maxH: 300 },
     desc: 'Rama z równomiernym podświetleniem LED od tyłu. Grafika świeci pełnym kolorem i staje się źródłem światła w pomieszczeniu.',
     features: ['Podświetlenie LED', 'Tkanina przepuszczająca światło', 'Wymienna grafika'] },
   { id: 'tkanina', name: 'Dodatkowa tkanina', defaultW: 250, defaultH: 180,
@@ -335,7 +336,13 @@ const $$ = s => [...document.querySelectorAll(s)];
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const product = id => PRODUCTS.find(p => p.id === id);
-const lim = axis => axis === 'w' ? [CONFIG.limits.minW, CONFIG.limits.maxW] : [CONFIG.limits.minH, CONFIG.limits.maxH];
+// Limity wymiarów: własne dla produktu (np. ramki LED) albo domyślne z CONFIG.limits.
+// key = id produktu albo 'modal' (okno konfiguratora → aktualnie wybrany produkt)
+const lim = (axis, key) => {
+  const p = product(key === 'modal' ? state.productId : key);
+  const L = (p && p.limits) || CONFIG.limits;
+  return axis === 'w' ? [L.minW, L.maxW] : [L.minH, L.maxH];
+};
 const utm = `?utm_source=${CONFIG.unsplash.appName}&utm_medium=referral`;
 const AI_NOTE = 'Zdjęcia z galerii przed drukiem modyfikujemy z użyciem AI, dlatego wydruk będzie się różnić od zdjęcia widocznego w galerii i w podglądzie. Projekt po obróbce wyślemy Ci e-mailem do akceptacji – drukujemy dopiero po Twojej zgodzie.';
 
@@ -450,7 +457,7 @@ function sizeArt(key, w, h) {
    ===================================================================== */
 function dimHTML(key, w, h) {
   return ['w', 'h'].map(axis => {
-    const [min, max] = lim(axis), val = axis === 'w' ? w : h;
+    const [min, max] = lim(axis, key), val = axis === 'w' ? w : h;
     const label = axis === 'w' ? 'Szerokość' : 'Wysokość';
     return `<div class="${axis === 'h' ? 'mt-5' : ''}">
       <div class="flex items-center justify-between gap-3">
@@ -468,7 +475,7 @@ function dimHTML(key, w, h) {
 
 function syncControls(key, skip) {
   ['w', 'h'].forEach(axis => {
-    const v = dims[key][axis], [min, max] = lim(axis);
+    const v = dims[key][axis], [min, max] = lim(axis, key);
     $$(`.dim-range[data-key="${key}"][data-axis="${axis}"]`).forEach(r => {
       if (skip !== 'range') r.value = v;
       r.style.setProperty('--fill', ((v - min) / (max - min) * 100) + '%');
@@ -1086,7 +1093,7 @@ document.addEventListener('input', e => {
   const t = e.target;
   if (t.matches('.dim-range')) setDim(t.dataset.key, t.dataset.axis, parseInt(t.value, 10), 'range');
   else if (t.matches('.dim-num')) {
-    const v = parseInt(t.value, 10), [min, max] = lim(t.dataset.axis);
+    const v = parseInt(t.value, 10), [min, max] = lim(t.dataset.axis, t.dataset.key);
     if (v >= min && v <= max) setDim(t.dataset.key, t.dataset.axis, v, 'num');
   }
 });
@@ -1094,7 +1101,7 @@ document.addEventListener('input', e => {
 document.addEventListener('change', e => {
   const t = e.target;
   if (t.matches('.dim-num')) {
-    const [min, max] = lim(t.dataset.axis);
+    const [min, max] = lim(t.dataset.axis, t.dataset.key);
     let v = parseInt(t.value, 10);
     if (isNaN(v)) v = dims[t.dataset.key][t.dataset.axis];
     v = clamp(v, min, max);
