@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dostawa i płatność – TextileWall</title>
+<meta name="description" content="Dostawa i płatności w sklepie textilewall.pl – czas realizacji 7–14 dni roboczych, koszt dostawy od 25 zł, kurier GLS / DPD, płatność przez Przelewy24.">
+<link rel="canonical" href="https://textilewall.pl/dostawa/">
+<meta property="og:title" content="Dostawa i płatność – TextileWall">
+<meta property="og:description" content="Dostawa i płatności w sklepie textilewall.pl – czas realizacji 7–14 dni roboczych, koszt dostawy od 25 zł, kurier GLS / DPD, płatność przez Przelewy24.">
+<meta property="og:url" content="https://textilewall.pl/dostawa/">
+<meta property="og:locale" content="pl_PL">
+<meta name="theme-color" content="#EEF0F0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['"Instrument Sans"', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'] },
+        colors: {
+          wall: 'var(--wall)', surface: 'var(--surface)', sunk: 'var(--sunk)',
+          ink: 'var(--ink)', 'on-ink': 'var(--on-ink)', muted: 'var(--muted)',
+          line: 'var(--line)', tape: 'var(--tape)', 'on-tape': 'var(--on-tape)'
+        }
+      }
+    }
+  };
+</script>
+
+<style>
+  /* ===== Paleta jak na stronie głównej: chłodna ściana galerii + żółć miarki ===== */
+  :root{
+    color-scheme: light;
+    --wall:#EEF0F0; --surface:#FFFFFF; --sunk:#E2E6E6;
+    --ink:#1D2326; --on-ink:#FFFFFF; --muted:#5C666A; --line:#D3D9DA;
+    --tape:#F2C230; --on-tape:#1D2326; --glass:rgba(238,240,240,.82);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      color-scheme: dark;
+      --wall:#121517; --surface:#1A1E21; --sunk:#23292C;
+      --ink:#E9ECEC; --on-ink:#121517; --muted:#9AA3A7; --line:#31383B;
+      --tape:#F2C230; --on-tape:#1D2326; --glass:rgba(18,21,23,.82);
+    }
+  }
+  html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; scroll-padding-top:84px; }
+  body{ background:var(--wall); color:var(--ink); }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *,*::before,*::after{ transition:none !important; animation:none !important; }
+  }
+  :focus-visible{ outline:2px solid var(--tape); outline-offset:2px; }
+
+  /* Przyciski i chipy – te same wartości co na stronie głównej */
+  .btn-ghost{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; border-radius:999px; padding:0 1.25rem; height:2.75rem; font-size:.875rem; font-weight:600; border:1px solid var(--line); background:var(--surface); color:var(--ink); transition:border-color .15s; }
+  .btn-ghost:hover{ border-color:var(--ink); }
+  .chip{ display:inline-flex; align-items:center; border-radius:999px; border:1px solid var(--line); background:var(--surface); padding:0 .875rem; height:2.25rem; font-size:.875rem; transition:border-color .15s; }
+  .chip:hover{ border-color:var(--ink); }
+  .chip[aria-current="page"]{ background:var(--ink); color:var(--on-ink); border-color:var(--ink); }
+
+  /* Treść prawna */
+  .legal h2{ font-size:1.25rem; line-height:1.3; font-weight:600; letter-spacing:-.01em; margin:2.75rem 0 .5rem; }
+  .legal h2 .sec{ display:block; font-size:.75rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-bottom:.25rem; }
+  .legal h3{ font-size:1rem; font-weight:600; margin:1.75rem 0 .25rem; }
+  .legal p{ margin:.75rem 0; line-height:1.75; }
+  .legal ol, .legal ul{ margin:.75rem 0; padding-left:1.5rem; }
+  .legal ol{ list-style:decimal; }
+  .legal ol[type="a"]{ list-style:lower-alpha; }
+  .legal ul{ list-style:disc; }
+  .legal li{ margin:.55rem 0; line-height:1.75; padding-left:.25rem; }
+  .legal li::marker{ color:var(--muted); }
+  .legal ol ul, .legal ol ol{ margin:.4rem 0; }
+  .legal a:not(.chip):not(.btn-ghost){ text-decoration:underline; text-decoration-color:var(--tape); text-decoration-thickness:2px; text-underline-offset:3px; }
+  .legal a:not(.chip):not(.btn-ghost):hover{ text-decoration-color:var(--ink); }
+  .legal dl.defs > div{ padding:.8rem 0; border-top:1px solid var(--line); }
+  .legal dl.defs > div:last-child{ border-bottom:1px solid var(--line); }
+  .legal dt{ font-weight:600; }
+  .legal dd{ margin:.15rem 0 0; line-height:1.7; color:var(--muted); }
+</style>
+<link rel="stylesheet" href="/assets/contact-form.css">
+<script src="/assets/contact-form.js" defer></script>
+</head>
+
+<body class="font-sans antialiased">
+
+<!-- ===================== NAGŁÓWEK ===================== -->
+<header class="sticky top-0 z-40 border-b border-line bg-[var(--glass)] backdrop-blur-xl">
+  <div class="mx-auto max-w-6xl px-5 h-16 flex items-center justify-between gap-6">
+    <a href="/" class="flex items-center gap-2.5 font-semibold text-lg tracking-tight">
+      <span class="relative w-7 h-5 border-2 border-ink rounded-[3px]" aria-hidden="true"><span class="absolute -top-[7px] left-0 right-0 h-[3px] bg-tape rounded-full"></span></span>
+      textilewall
+    </a>
+    <nav class="hidden md:flex items-center gap-8 text-sm text-muted">
+      <a href="/#produkty" class="hover:text-ink transition">Produkty</a>
+      <a href="/#jak-to-dziala" class="hover:text-ink transition">Jak to działa</a>
+      <a href="#kontakt" class="hover:text-ink transition">Kontakt</a>
+    </nav>
+    <a href="/" class="btn-ghost h-10">&larr; Wróć do sklepu</a>
+  </div>
+</header>
+
+<main>
+  <div class="mx-auto max-w-3xl px-5 pt-12 pb-20 md:pt-16 md:pb-28">
+    <nav aria-label="Informacje prawne i pomoc" class="flex flex-wrap gap-2">
+      <a href="/regulamin" class="chip">Regulamin</a>
+      <a href="/polityka-prywatnosci" class="chip">Polityka prywatności</a>
+      <a href="/dostawa" class="chip" aria-current="page">Dostawa i płatność</a>
+      <a href="/reklamacje" class="chip">Reklamacje i zwroty</a>
+    </nav>
+    <h1 class="mt-8 text-4xl sm:text-5xl font-semibold tracking-[-0.03em] leading-[1.05]">Dostawa i płatność</h1>
+    <p class="mt-4 text-lg text-muted leading-relaxed">Jak wysyłamy zamówienia i jak możesz za nie zapłacić.</p>
+    
+    <div class="legal mt-6">
+
+      <div class="not-prose grid sm:grid-cols-2 gap-3 mt-2">
+        <div class="rounded-2xl border border-line bg-surface p-5"><div class="text-xs text-muted">Czas realizacji</div><div class="mt-1.5 text-xl font-semibold tracking-tight">7–14 dni roboczych</div><div class="mt-1 text-sm text-muted">Każde zamówienie jest produkowane na wymiar.</div></div>
+        <div class="rounded-2xl border border-line bg-surface p-5"><div class="text-xs text-muted">Koszt dostawy</div><div class="mt-1.5 text-xl font-semibold tracking-tight">od 25 zł</div><div class="mt-1 text-sm text-muted">Zależy od wymiarów paczki.</div></div>
+        <div class="rounded-2xl border border-line bg-surface p-5"><div class="text-xs text-muted">Kurier</div><div class="mt-1.5 text-xl font-semibold tracking-tight">GLS / DPD</div></div>
+        <div class="rounded-2xl border border-line bg-surface p-5"><div class="text-xs text-muted">Darmowa dostawa</div><div class="mt-1.5 text-xl font-semibold tracking-tight">powyżej 500 zł</div><div class="mt-1 text-sm text-muted">Przy wartości zamówienia powyżej 500 zł.</div></div>
+      </div>
+
+      <h2><span class="sec">Dostawa</span>Wysyłka kurierem na terenie całej Polski</h2>
+      <p>Wszystkie zamówienia wysyłamy kurierem na terenie całej Polski. Profile aluminiowe są bezpiecznie zapakowane w tekturowy tubus. Tkanina z nadrukiem jest zrolowana i zabezpieczona folią.</p>
+
+      <h2><span class="sec">Płatności</span>Wybierz wygodny sposób zapłaty</h2>
+      <ul>
+        <li>Płatność online (Przelewy24) – karty, BLIK, przelew.</li>
+        <li>Przelew tradycyjny (bankowy).</li>
+      </ul>
+
+      <h2><span class="sec">Śledzenie przesyłki</span>Wiesz, gdzie jest Twoja paczka</h2>
+      <p>Po wysłaniu zamówienia otrzymasz e-mail z numerem przesyłki i linkiem do śledzenia paczki.</p>
+
+      <p class="mt-8">Pytania o dostawę? <a href="mailto:kontakt@textilewall.pl">Napisz do nas</a>.</p>
+
+    </div>
+  </div>
+</main>
+
+<!-- ===================== STOPKA ===================== -->
+<footer id="kontakt" class="bg-ink text-on-ink">
+  <div class="mx-auto max-w-6xl px-5 py-14 grid gap-12 lg:grid-cols-[1fr_1.05fr]">
+    <div>
+      <div class="text-xl font-semibold tracking-tight">textilewall</div>
+      <p class="mt-3 text-sm opacity-70 max-w-sm leading-relaxed">Tekstylne ściany i ramki na aluminiowym profilu, wykonywane na wymiar.</p>
+      <div class="mt-8 grid gap-8 sm:grid-cols-2 text-sm leading-7">
+        <div>
+          <div class="font-semibold mb-2">Kontakt</div>
+          <a href="tel:+48788788155" class="block opacity-80 hover:opacity-100">+48 788 788 155</a>
+          <a href="mailto:kontakt@textilewall.pl" class="block opacity-80 hover:opacity-100">kontakt@textilewall.pl</a>
+        </div>
+        <div class="opacity-80">
+          <div class="font-semibold mb-2 opacity-100">Mam Pomysł Konrad Czajkowski</div>
+          ul. Polna 26/2<br>55-010 Smardzów<br>NIP 6932068382
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-lg font-semibold tracking-tight">Napisz do nas</h2>
+      <p class="mt-1 text-sm opacity-70">Masz pytanie o wycenę lub nietypowy wymiar? Wyślij wiadomość, odpowiemy e-mailem.</p>
+      <form data-contact-form data-source="stopka" class="mt-5 grid gap-3.5" novalidate>
+        <div class="grid gap-3.5 sm:grid-cols-2">
+          <label class="block"><span class="cf-label">Imię i nazwisko</span><input name="name" type="text" autocomplete="name" required maxlength="100" class="cf-input"></label>
+          <label class="block"><span class="cf-label">E-mail</span><input name="email" type="email" autocomplete="email" required maxlength="200" class="cf-input"></label>
+        </div>
+        <label class="block"><span class="cf-label">Telefon <span class="opacity-70">(opcjonalnie)</span></span><input name="phone" type="tel" autocomplete="tel" maxlength="30" class="cf-input"></label>
+        <label class="block"><span class="cf-label">Wiadomość</span><textarea name="message" rows="4" required maxlength="3000" class="cf-input"></textarea></label>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="cf-hp" aria-hidden="true">
+        <label class="flex items-start gap-2.5 text-xs opacity-80 leading-relaxed"><input type="checkbox" name="consent" class="cf-check mt-0.5" required><span>Zapoznałem się z <a href="/polityka-prywatnosci" class="underline underline-offset-2">Polityką prywatności</a> i wiem, że moje dane posłużą do odpowiedzi na wiadomość.</span></label>
+        <div class="flex flex-wrap items-center gap-4">
+          <button type="submit" class="cf-btn">Wyślij wiadomość</button>
+          <p data-cf-status role="status" aria-live="polite" class="cf-status text-sm"></p>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="mx-auto max-w-6xl px-5 py-6 flex flex-wrap gap-x-6 gap-y-2 justify-between text-xs opacity-60">
+      <span>© <span id="year"></span> TextileWall.pl</span>
+      <span class="flex flex-wrap gap-x-5 gap-y-2"><a href="/regulamin" class="hover:opacity-100">Regulamin</a><a href="/polityka-prywatnosci" class="hover:opacity-100">Polityka prywatności</a><a href="/dostawa" class="hover:opacity-100">Dostawa i płatność</a><a href="/reklamacje" class="hover:opacity-100">Reklamacje i zwroty</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

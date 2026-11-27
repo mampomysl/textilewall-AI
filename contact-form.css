@@ -1,0 +1,15 @@
+/* Formularz kontaktowy w stopce (ciemne tło w trybie jasnym, jasne w ciemnym).
+   Wystarczy dodać <form data-contact-form data-source="nazwa"> – działa też w przyszłym aside. */
+.cf-label{display:block;font-size:.75rem;opacity:.75;margin-bottom:.3rem}
+.cf-input{width:100%;border-radius:.6rem;padding:.65rem .8rem;font:inherit;font-size:.9rem;color:var(--on-ink);
+  background:color-mix(in srgb,var(--on-ink) 8%,transparent);border:1px solid color-mix(in srgb,var(--on-ink) 28%,transparent)}
+.cf-input:focus{outline:2px solid var(--tape);outline-offset:1px;border-color:var(--tape)}
+textarea.cf-input{resize:vertical;min-height:7rem}
+.cf-check{accent-color:var(--tape);flex:none}
+.cf-btn{display:inline-flex;align-items:center;justify-content:center;height:2.75rem;padding:0 1.5rem;border-radius:999px;
+  background:var(--tape);color:var(--on-tape);font-size:.875rem;font-weight:600;transition:opacity .15s}
+.cf-btn:hover{opacity:.9}
+.cf-btn:disabled{opacity:.5;cursor:not-allowed}
+.cf-status:not(:empty){border-left:3px solid var(--tape);padding-left:.6rem}
+.cf-status[data-state="error"]{font-weight:600}
+.cf-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}

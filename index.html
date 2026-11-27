@@ -119,6 +119,8 @@
     .num-input{ @apply w-24 h-10 rounded-lg border border-line bg-surface px-3 text-right font-semibold tabular-nums outline-none focus:border-ink; }
   }
 </style>
+<link rel="stylesheet" href="/assets/contact-form.css">
+<script src="/assets/contact-form.js" defer></script>
 </head>
 
 <body class="font-sans antialiased">
@@ -191,25 +193,45 @@
 
 <!-- ===================== STOPKA ===================== -->
 <footer id="kontakt" class="bg-ink text-on-ink">
-  <div class="mx-auto max-w-6xl px-5 py-14 grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+  <div class="mx-auto max-w-6xl px-5 py-14 grid gap-12 lg:grid-cols-[1fr_1.05fr]">
     <div>
       <div class="text-xl font-semibold tracking-tight">textilewall</div>
       <p class="mt-3 text-sm opacity-70 max-w-sm leading-relaxed">Tekstylne ściany i ramki na aluminiowym profilu, wykonywane na wymiar.</p>
+      <div class="mt-8 grid gap-8 sm:grid-cols-2 text-sm leading-7">
+        <div>
+          <div class="font-semibold mb-2">Kontakt</div>
+          <a href="tel:+48788788155" class="block opacity-80 hover:opacity-100">+48 788 788 155</a>
+          <a href="mailto:kontakt@textilewall.pl" class="block opacity-80 hover:opacity-100">kontakt@textilewall.pl</a>
+        </div>
+        <div class="opacity-80">
+          <div class="font-semibold mb-2 opacity-100">Mam Pomysł Konrad Czajkowski</div>
+          ul. Polna 26/2<br>55-010 Smardzów<br>NIP 6932068382
+        </div>
+      </div>
     </div>
-    <div class="text-sm leading-7">
-      <div class="font-semibold mb-2">Kontakt</div>
-      <a href="tel:+48788799155" class="block opacity-80 hover:opacity-100">+48 788 799 155</a>
-      <a href="mailto:kontakt@textilewall.pl" class="block opacity-80 hover:opacity-100">kontakt@textilewall.pl</a>
-    </div>
-    <div class="text-sm leading-7 opacity-80">
-      <div class="font-semibold mb-2 opacity-100">Mam Pomysł Konrad Czajkowski</div>
-      ul. Polna 26/2<br>55-010 Smardzów<br>NIP 6932068382
+    <div>
+      <h2 class="text-lg font-semibold tracking-tight">Napisz do nas</h2>
+      <p class="mt-1 text-sm opacity-70">Masz pytanie o wycenę lub nietypowy wymiar? Wyślij wiadomość, odpowiemy e-mailem.</p>
+      <form data-contact-form data-source="stopka" class="mt-5 grid gap-3.5" novalidate>
+        <div class="grid gap-3.5 sm:grid-cols-2">
+          <label class="block"><span class="cf-label">Imię i nazwisko</span><input name="name" type="text" autocomplete="name" required maxlength="100" class="cf-input"></label>
+          <label class="block"><span class="cf-label">E-mail</span><input name="email" type="email" autocomplete="email" required maxlength="200" class="cf-input"></label>
+        </div>
+        <label class="block"><span class="cf-label">Telefon <span class="opacity-70">(opcjonalnie)</span></span><input name="phone" type="tel" autocomplete="tel" maxlength="30" class="cf-input"></label>
+        <label class="block"><span class="cf-label">Wiadomość</span><textarea name="message" rows="4" required maxlength="3000" class="cf-input"></textarea></label>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="cf-hp" aria-hidden="true">
+        <label class="flex items-start gap-2.5 text-xs opacity-80 leading-relaxed"><input type="checkbox" name="consent" class="cf-check mt-0.5" required><span>Zapoznałem się z <a href="/polityka-prywatnosci" class="underline underline-offset-2">Polityką prywatności</a> i wiem, że moje dane posłużą do odpowiedzi na wiadomość.</span></label>
+        <div class="flex flex-wrap items-center gap-4">
+          <button type="submit" class="cf-btn">Wyślij wiadomość</button>
+          <p data-cf-status role="status" aria-live="polite" class="cf-status text-sm"></p>
+        </div>
+      </form>
     </div>
   </div>
   <div class="border-t border-white/10">
     <div class="mx-auto max-w-6xl px-5 py-6 flex flex-wrap gap-x-6 gap-y-2 justify-between text-xs opacity-60">
       <span>© <span id="year"></span> TextileWall.pl</span>
-      <span class="flex gap-5"><a href="/regulamin" class="hover:opacity-100">Regulamin</a><a href="/polityka-prywatnosci" class="hover:opacity-100">Polityka prywatności</a><a href="/dostawa" class="hover:opacity-100">Dostawa i płatność</a></span>
+      <span class="flex flex-wrap gap-x-5 gap-y-2"><a href="/regulamin" class="hover:opacity-100">Regulamin</a><a href="/polityka-prywatnosci" class="hover:opacity-100">Polityka prywatności</a><a href="/dostawa" class="hover:opacity-100">Dostawa i płatność</a><a href="/reklamacje" class="hover:opacity-100">Reklamacje i zwroty</a></span>
     </div>
   </div>
 </footer>

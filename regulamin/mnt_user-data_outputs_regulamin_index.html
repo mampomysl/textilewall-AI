@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regulamin sklepu – TextileWall</title>
+<meta name="description" content="Regulamin sklepu internetowego textilewall.pl – ogólne warunki korzystania ze sklepu, składania zamówień, płatności, dostawy, odstąpienia od umowy i reklamacji.">
+<link rel="canonical" href="https://textilewall.pl/regulamin/">
+<meta property="og:title" content="Regulamin sklepu – TextileWall">
+<meta property="og:description" content="Regulamin sklepu internetowego textilewall.pl – ogólne warunki korzystania ze sklepu, składania zamówień, płatności, dostawy, odstąpienia od umowy i reklamacji.">
+<meta property="og:url" content="https://textilewall.pl/regulamin/">
+<meta property="og:locale" content="pl_PL">
+<meta name="theme-color" content="#EEF0F0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['"Instrument Sans"', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'] },
+        colors: {
+          wall: 'var(--wall)', surface: 'var(--surface)', sunk: 'var(--sunk)',
+          ink: 'var(--ink)', 'on-ink': 'var(--on-ink)', muted: 'var(--muted)',
+          line: 'var(--line)', tape: 'var(--tape)', 'on-tape': 'var(--on-tape)'
+        }
+      }
+    }
+  };
+</script>
+
+<style>
+  /* ===== Paleta jak na stronie głównej: chłodna ściana galerii + żółć miarki ===== */
+  :root{
+    color-scheme: light;
+    --wall:#EEF0F0; --surface:#FFFFFF; --sunk:#E2E6E6;
+    --ink:#1D2326; --on-ink:#FFFFFF; --muted:#5C666A; --line:#D3D9DA;
+    --tape:#F2C230; --on-tape:#1D2326; --glass:rgba(238,240,240,.82);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      color-scheme: dark;
+      --wall:#121517; --surface:#1A1E21; --sunk:#23292C;
+      --ink:#E9ECEC; --on-ink:#121517; --muted:#9AA3A7; --line:#31383B;
+      --tape:#F2C230; --on-tape:#1D2326; --glass:rgba(18,21,23,.82);
+    }
+  }
+  html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; scroll-padding-top:84px; }
+  body{ background:var(--wall); color:var(--ink); }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *,*::before,*::after{ transition:none !important; animation:none !important; }
+  }
+  :focus-visible{ outline:2px solid var(--tape); outline-offset:2px; }
+
+  /* Przyciski i chipy – te same wartości co na stronie głównej */
+  .btn-ghost{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; border-radius:999px; padding:0 1.25rem; height:2.75rem; font-size:.875rem; font-weight:600; border:1px solid var(--line); background:var(--surface); color:var(--ink); transition:border-color .15s; }
+  .btn-ghost:hover{ border-color:var(--ink); }
+  .chip{ display:inline-flex; align-items:center; border-radius:999px; border:1px solid var(--line); background:var(--surface); padding:0 .875rem; height:2.25rem; font-size:.875rem; transition:border-color .15s; }
+  .chip:hover{ border-color:var(--ink); }
+  .chip[aria-current="page"]{ background:var(--ink); color:var(--on-ink); border-color:var(--ink); }
+
+  /* Treść prawna */
+  .legal h2{ font-size:1.25rem; line-height:1.3; font-weight:600; letter-spacing:-.01em; margin:2.75rem 0 .5rem; }
+  .legal h2 .sec{ display:block; font-size:.75rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-bottom:.25rem; }
+  .legal h3{ font-size:1rem; font-weight:600; margin:1.75rem 0 .25rem; }
+  .legal p{ margin:.75rem 0; line-height:1.75; }
+  .legal ol, .legal ul{ margin:.75rem 0; padding-left:1.5rem; }
+  .legal ol{ list-style:decimal; }
+  .legal ol[type="a"]{ list-style:lower-alpha; }
+  .legal ul{ list-style:disc; }
+  .legal li{ margin:.55rem 0; line-height:1.75; padding-left:.25rem; }
+  .legal li::marker{ color:var(--muted); }
+  .legal ol ul, .legal ol ol{ margin:.4rem 0; }
+  .legal a:not(.chip):not(.btn-ghost){ text-decoration:underline; text-decoration-color:var(--tape); text-decoration-thickness:2px; text-underline-offset:3px; }
+  .legal a:not(.chip):not(.btn-ghost):hover{ text-decoration-color:var(--ink); }
+  .legal dl.defs > div{ padding:.8rem 0; border-top:1px solid var(--line); }
+  .legal dl.defs > div:last-child{ border-bottom:1px solid var(--line); }
+  .legal dt{ font-weight:600; }
+  .legal dd{ margin:.15rem 0 0; line-height:1.7; color:var(--muted); }
+</style>
+<link rel="stylesheet" href="/assets/contact-form.css">
+<script src="/assets/contact-form.js" defer></script>
+</head>
+
+<body class="font-sans antialiased">
+
+<!-- ===================== NAGŁÓWEK ===================== -->
+<header class="sticky top-0 z-40 border-b border-line bg-[var(--glass)] backdrop-blur-xl">
+  <div class="mx-auto max-w-6xl px-5 h-16 flex items-center justify-between gap-6">
+    <a href="/" class="flex items-center gap-2.5 font-semibold text-lg tracking-tight">
+      <span class="relative w-7 h-5 border-2 border-ink rounded-[3px]" aria-hidden="true"><span class="absolute -top-[7px] left-0 right-0 h-[3px] bg-tape rounded-full"></span></span>
+      textilewall
+    </a>
+    <nav class="hidden md:flex items-center gap-8 text-sm text-muted">
+      <a href="/#produkty" class="hover:text-ink transition">Produkty</a>
+      <a href="/#jak-to-dziala" class="hover:text-ink transition">Jak to działa</a>
+      <a href="#kontakt" class="hover:text-ink transition">Kontakt</a>
+    </nav>
+    <a href="/" class="btn-ghost h-10">&larr; Wróć do sklepu</a>
+  </div>
+</header>
+
+<main>
+  <div class="mx-auto max-w-3xl px-5 pt-12 pb-20 md:pt-16 md:pb-28">
+    <nav aria-label="Informacje prawne i pomoc" class="flex flex-wrap gap-2">
+      <a href="/regulamin" class="chip" aria-current="page">Regulamin</a>
+      <a href="/polityka-prywatnosci" class="chip">Polityka prywatności</a>
+      <a href="/dostawa" class="chip">Dostawa i płatność</a>
+      <a href="/reklamacje" class="chip">Reklamacje i zwroty</a>
+    </nav>
+    <h1 class="mt-8 text-4xl sm:text-5xl font-semibold tracking-[-0.03em] leading-[1.05]">Regulamin sklepu internetowego</h1>
+    <p class="mt-4 text-lg text-muted leading-relaxed">Ogólne warunki korzystania ze sklepu textilewall.pl.</p>
+    <nav aria-label="Spis treści" class="mt-8 rounded-2xl border border-line bg-surface p-5"><div class="text-xs font-semibold uppercase tracking-wider text-muted">Spis treści</div><ol class="mt-3 grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm"><li><a href="#par-1" class="hover:underline underline-offset-4"><span class="text-muted tabular-nums">§&nbsp;1</span>&ensp;Definicje</a></li><li><a href="#par-2" class="hover:underline underline-offset-4"><span class="text-muted tabular-nums">§&nbsp;2</span>&ensp;Kontakt ze Sprzedawcą</a></li><li><a href="#par-3" class="hover:underline underline-offset-4"><span class="text-muted tabular-nums">§&nbsp;3</span>&ensp;Składanie zamówień</a></li><li><a href="#par-4" class="hover:underline underline-offset-4"><span class="text-muted tabular-nums">§&nbsp;4</span>&ensp;Realizacja zamówień</a></li><li><a href="#par-5" class="hover:underline underline-offset-4"><span class="text-muted tabular-nums">§&nbsp;5</span>&ensp;Cena i płatności</a></li><li><a href="#par-6" class="hover:underline underline-offset-4"><span class="text-muted tabular-nums">§&nbsp;6</span>&ensp;Czas realizacji zamówienia</a></li><li><a href="#par-7" class="hover:underline underline-offset-4"><span class="text-muted tabular-nums">§&nbsp;7</span>&ensp;Dostawa</a></li><li><a href="#par-8" class="hover:underline underline-offset-4"><span class="text-muted tabular-nums">§&nbsp;8</span>&ensp;Odstąpienie od umowy</a></li><li><a href="#par-9" class="hover:underline underline-offset-4"><span class="text-muted tabular-nums">§&nbsp;9</span>&ensp;Reklamacje</a></li><li><a href="#par-10" class="hover:underline underline-offset-4"><span class="text-muted tabular-nums">§&nbsp;10</span>&ensp;Gwarancja</a></li><li><a href="#par-11" class="hover:underline underline-offset-4"><span class="text-muted tabular-nums">§&nbsp;11</span>&ensp;Dane osobowe</a></li><li><a href="#par-12" class="hover:underline underline-offset-4"><span class="text-muted tabular-nums">§&nbsp;12</span>&ensp;Pozasądowe sposoby rozpatrywania reklamacji i dochodzenia roszczeń</a></li><li><a href="#par-13" class="hover:underline underline-offset-4"><span class="text-muted tabular-nums">§&nbsp;13</span>&ensp;Pozostałe postanowienia</a></li><li><a href="#par-14" class="hover:underline underline-offset-4"><span class="text-muted tabular-nums">§&nbsp;14</span>&ensp;Postanowienia końcowe</a></li></ol></nav>
+    <div class="legal mt-6">
+
+      <p>Niniejszy Regulamin jest Regulaminem, o którym mowa w art. 8 ustawy z dnia 18 lipca 2002 r. o świadczeniu usług drogą elektroniczną (Dz. U. z 2002 r. Nr 144, poz. 1204 ze zm.), a także reguluje warunki zawierania Umów sprzedaży w Serwisie, zgodnie z treścią innych ustaw, odpowiednio regulujących ten obowiązek.</p>
+      <p>Serwis prowadzony jest przez: <strong>MAM POMYSŁ Konrad Czajkowski, ul. Polna 26/2, 55-010 Smardzów, NIP 6932068382, Regon 383944997</strong>.</p>
+      <p>Wyłączne prawo do prowadzenia Serwisu ma wskazany powyżej podmiot, który jest Właścicielem, Sprzedawcą oraz Administratorem Serwisu. W przypadku jakichkolwiek pytań prosimy o kontaktowanie się na poniższe dane teleadresowe: tel. <a href="tel:+48788788155">+48 788 788 155</a>, e-mail <a href="mailto:kontakt@textilewall.pl">kontakt@textilewall.pl</a>.</p>
+      <p>Serwis działa w oparciu o obowiązujące przepisy prawa oraz z poszanowaniem dobrych obyczajów w obrocie gospodarczym, w szczególności mając na względzie standardy e-commerce w przedmiocie jakości towarów oraz obsługi przeprowadzanych transakcji.</p>
+      <h2 id="par-1"><span class="sec">§&nbsp;1</span>Definicje</h2>
+      <dl class="defs">
+        <div><dt>Sprzedawca</dt><dd>MAM POMYSŁ Konrad Czajkowski, ul. Polna 26/2, 55-010 Smardzów, NIP 6932068382, Regon 383944997.</dd></div>
+        <div><dt>Sklep</dt><dd>sklep internetowy znajdujący się pod adresem elektronicznym textilewall.pl, za pośrednictwem którego zawierana jest umowa.</dd></div>
+        <div><dt>Sprzedaż</dt><dd>umowa sprzedaży zawierana pomiędzy Sprzedawcą a Klientem na odległość, za pośrednictwem Sklepu przy wykorzystaniu sieci telekomunikacyjnej, bez jednoczesnej obecności stron.</dd></div>
+        <div><dt>Zamówienie</dt><dd>skierowane do Sprzedawcy oświadczenie woli Klienta stanowiące ofertę zawarcia umowy Sprzedaży Towarów znajdujących się w Koszyku.</dd></div>
+        <div><dt>Klient</dt><dd>osoba fizyczna (w tym Konsument), osoba prawna lub jednostka osobowa nieposiadająca osobowości prawnej, która dokonuje zakupu w Sklepie.</dd></div>
+        <div><dt>Konsument</dt><dd>osoba fizyczna dokonująca zakupu niezwiązanego bezpośrednio z jej działalnością gospodarczą lub zawodową.</dd></div>
+        <div><dt>Towar</dt><dd>rzeczy ruchome oferowane przez Sprzedawcę w Sklepie, będące przedmiotem umowy Sprzedaży.</dd></div>
+        <div><dt>Koszyk</dt><dd>element oprogramowania Sklepu, w którym widoczne są wybrane przez Klienta Towary oraz ich liczba.</dd></div>
+        <div><dt>Formularz zamówienia</dt><dd>formularz elektroniczny dostępny na stronie internetowej Sklepu, za pośrednictwem którego Klient składa Zamówienie, w szczególności poprzez dodanie Towarów do Koszyka oraz określenie warunków umowy Sprzedaży, w tym sposobu dostawy i płatności.</dd></div>
+        <div><dt>Cena</dt><dd>cena jednostkowa Towaru zamieszczona w opisie Towaru, wyrażona w złotych polskich.</dd></div>
+        <div><dt>Przelew</dt><dd>przelew dokonywany za pośrednictwem serwisu płatności internetowych.</dd></div>
+        <div><dt>Dni robocze</dt><dd>dni od poniedziałku do piątku, z wyłączeniem dni ustawowo wolnych od pracy.</dd></div>
+      </dl>
+      <h2 id="par-2"><span class="sec">§&nbsp;2</span>Kontakt ze Sprzedawcą</h2>
+      <p>Klient może skontaktować się ze Sprzedawcą:</p>
+      <ul>
+        <li>drogą mailową: <a href="mailto:kontakt@textilewall.pl">kontakt@textilewall.pl</a>,</li>
+        <li>poprzez formularz kontaktowy dostępny w stopce strony textilewall.pl,</li>
+        <li>listownie: MAM POMYSŁ Konrad Czajkowski, ul. Polna 26/2, 55-010 Smardzów,</li>
+        <li>telefonicznie: <a href="tel:+48788788155">+48 788 788 155</a>.</li>
+      </ul>
+      <h2 id="par-3"><span class="sec">§&nbsp;3</span>Składanie zamówień</h2>
+      <ol>
+        <li>W celu przeglądania asortymentu Towarów sprzedawanych przez Sklep oraz składania Zamówień nie jest wymagane założenie indywidualnego konta na stronie Sklepu.</li>
+        <li>Złożenie zamówienia odbywa się przy wykorzystaniu Koszyka poprzez złożenie jednorazowego zamówienia wybranego przez Klienta Towaru na stronie (kliknięcie przycisku „Dodaj do koszyka”).</li>
+        <li>Przed złożeniem zamówienia Klient dokonuje za pośrednictwem Formularza zamówienia ostatecznego wyboru Towaru i jego ilości, a także wybiera sposób odbioru oraz formę płatności, podając przy tym dane do wystawienia faktury, jeśli są inne niż dane odbiorcy Zamówienia.</li>
+        <li>Poprzez kliknięcie ikony „Zamawiam i płacę” Klient akceptuje warunki sprzedaży, właściwości oraz cenę Towaru i zobowiązuje się do zapłaty Ceny oraz kosztów dostawy.</li>
+        <li>Składanie Zamówienia przez Klienta możliwe jest wyłącznie po podaniu niezbędnych danych osobowych i adresowych Klienta umożliwiających realizację Zamówienia.</li>
+        <li>W celu skutecznego złożenia Zamówienia niezbędna jest akceptacja treści niniejszego Regulaminu oraz <a href="/polityka-prywatnosci">Polityki prywatności</a>.</li>
+        <li>Poprzez złożenie Zamówienia Klient składa Sprzedawcy ofertę zawarcia umowy Sprzedaży.</li>
+      </ol>
+      <h2 id="par-4"><span class="sec">§&nbsp;4</span>Realizacja zamówień</h2>
+      <ol>
+        <li>Po złożeniu Zamówienia przez Klienta Sprzedawca wysyła na podany przez Klienta adres e-mail wiadomość z potwierdzeniem wpłynięcia zamówienia.</li>
+        <li>Ostateczne przyjęcie Zamówienia Sprzedawca potwierdza wysyłając do Klienta kolejną wiadomość e-mail, w której informuje Klienta o stanie realizacji zamówienia. Do niniejszej wiadomości Sprzedawca dołącza niniejszy Regulamin oraz formularz odstąpienia od umowy.</li>
+        <li>Z chwilą otrzymania przez Klienta potwierdzenia przyjęcia oferty wysłanego przez Sprzedawcę, o którym mowa w ustępie poprzedzającym, zostaje zawarta umowa Sprzedaży wiążąca Klienta i Sprzedawcę.</li>
+        <li>Sprzedawca zastrzega sobie prawo odmowy realizacji Zamówień, które zostały złożone bez wskazania adresu e-mail lub gdy Klient podał błędny adres e-mail.</li>
+      </ol>
+      <h2 id="par-5"><span class="sec">§&nbsp;5</span>Cena i płatności</h2>
+      <ol>
+        <li>Ceny Towarów znajdujących się w asortymencie Sklepu są wyrażone w złotych polskich.</li>
+        <li>Sprzedawca może dokonywać modyfikacji asortymentu Sklepu, Cen wystawionych Towarów, przeprowadzać i odwoływać akcje promocyjne.</li>
+        <li>Zmiany wysokości Ceny związane z jej modyfikacją lub prowadzoną przez Sprzedawcę akcją promocyjną nie mają wpływu na zawarte wcześniej umowy Sprzedaży.</li>
+        <li>Cena nie zawiera kosztów dostawy i płatności. Koszty te obciążają Klienta, chyba że umowa Sprzedaży stanowi inaczej.</li>
+        <li>Dokonanie płatności przez Klienta odbywa się przed realizacją Zamówienia.</li>
+        <li>Sprzedawca akceptuje następujące metody płatności:
+          <ol type="a">
+            <li>przelew bankowy,</li>
+            <li>płatność przez Przelewy24,</li>
+            <li>karty płatnicze:
+              <ul>
+                <li>Visa,</li>
+                <li>Visa Electron,</li>
+                <li>Mastercard,</li>
+                <li>MasterCard Electronic,</li>
+                <li>Maestro.</li>
+              </ul>
+            </li>
+          </ol>
+        </li>
+      </ol>
+      <h2 id="par-6"><span class="sec">§&nbsp;6</span>Czas realizacji zamówienia</h2>
+      <ol>
+        <li>W przypadku wyboru przez Klienta sposobu płatności przelewem lub kartą płatniczą czas realizacji Zamówienia liczy się od dnia uznania rachunku bankowego Sprzedawcy.</li>
+      </ol>
+      <h2 id="par-7"><span class="sec">§&nbsp;7</span>Dostawa</h2>
+      <ol>
+        <li>Dostawa Produktu możliwa jest <strong>na terytorium Rzeczypospolitej Polskiej</strong>. Zamówiony Towar jest dostarczany Klientowi w wybrany przez niego sposób:
+          <ul>
+            <li>kurier GLS lub DPD,</li>
+            <li>odbiór osobisty.</li>
+          </ul>
+        </li>
+        <li>Jeżeli Klient wybrał sposób dostawy poprzez przesyłkę, Towar zostanie wysłany przez Sprzedawcę w terminie wskazanym w jego opisie w sposób wybrany przez Klienta podczas składania Zamówienia.</li>
+        <li>W przypadku zamówienia Towarów o różnych terminach dostawy, Klient ma możliwość żądania dostawy poszczególnych Towarów częściami lub też dostarczenia wszystkich Towarów po skompletowaniu całego Zamówienia.</li>
+        <li>W przypadku zamówienia Towarów o różnych terminach dostawy i wyboru dostawy po skompletowaniu całego Zamówienia, terminem dostawy jest najdłuższy z poszczególnych terminów dostawy.</li>
+        <li>Początek biegu terminu dostawy Towaru do Klienta liczy się od dnia uznania rachunku bankowego Sprzedawcy.</li>
+        <li>Dostawa Produktu możliwa jest także na terytorium Niemiec. Zamówiony Towar jest wówczas dostarczany Klientowi przez usługę Kurier UPS. Płatność w tym wypadku tylko i wyłącznie przez Przelewy24 kartą lub BLIK. Początek biegu terminu dostawy Towaru do Klienta liczy się od dnia uznania rachunku bankowego Sprzedawcy.</li>
+      </ol>
+      <h2 id="par-8"><span class="sec">§&nbsp;8</span>Odstąpienie od umowy</h2>
+      <ol>
+        <li>Konsument, który zawarł umowę na odległość, może w terminie 14 dni kalendarzowych odstąpić od niej bez podawania przyczyny i bez ponoszenia kosztów, z wyjątkiem kosztów wskazanych w niniejszym paragrafie.</li>
+        <li>Do zachowania terminu wystarczy wysłanie oświadczenia przed jego upływem.</li>
+        <li>Oświadczenie o odstąpieniu od umowy może zostać złożone:
+          <ul>
+            <li>pisemnie na adres: MAM POMYSŁ Konrad Czajkowski, ul. Polna 26/2, 55-010 Smardzów,</li>
+            <li>w formie elektronicznej za pośrednictwem poczty elektronicznej na adres: <a href="mailto:kontakt@textilewall.pl">kontakt@textilewall.pl</a>.</li>
+          </ul>
+        </li>
+        <li>Bieg terminu do odstąpienia od umowy rozpoczyna się od objęcia Produktu w posiadanie przez konsumenta lub wskazaną przez niego osobę trzecią inną niż przewoźnik.</li>
+        <li>W przypadku odstąpienia od umowy zawartej na odległość umowę uważa się za niezawartą.</li>
+        <li>Sprzedawca ma obowiązek niezwłocznie, nie później niż w terminie 14 dni kalendarzowych od dnia otrzymania oświadczenia konsumenta o odstąpieniu od umowy, zwrócić konsumentowi wszystkie dokonane przez niego płatności, w tym koszty dostawy Towaru (z wyjątkiem dodatkowych kosztów wynikających z wybranego przez konsumenta sposobu dostawy innego niż najtańszy zwykły sposób dostawy dostępny w Sklepie). Sprzedawca dokonuje zwrotu płatności przy użyciu takiego samego sposobu płatności, jakiego użył Konsument, chyba że konsument wyraźnie zgodził się na inny sposób zwrotu, który nie wiąże się dla niego z żadnymi kosztami.</li>
+        <li>Sprzedawca może wstrzymać się ze zwrotem płatności otrzymanych od konsumenta do chwili otrzymania Towaru z powrotem lub dostarczenia przez konsumenta dowodu jego odesłania, w zależności od tego, które zdarzenie nastąpi wcześniej.</li>
+        <li>Konsument ma obowiązek niezwłocznie, nie później niż w terminie 14 dni kalendarzowych od dnia, w którym odstąpił od umowy, zwrócić Towar na adres podany przez Sprzedawcę.</li>
+        <li>Konsument ponosi odpowiedzialność za zmniejszenie wartości Towaru będące wynikiem korzystania z niego w sposób wykraczający poza konieczny do stwierdzenia charakteru, cech i funkcjonowania Towaru.</li>
+        <li>Możliwe koszty związane z odstąpieniem przez konsumenta od umowy, które obowiązany jest ponieść konsument:
+          <ul>
+            <li>jeżeli konsument wybrał sposób dostawy Produktu inny niż najtańszy zwykły sposób dostawy dostępny w Sklepie, Sprzedawca nie jest zobowiązany do zwrotu konsumentowi poniesionych przez niego dodatkowych kosztów,</li>
+            <li>konsument ponosi bezpośrednie koszty zwrotu Produktu,</li>
+            <li>jeśli zamówiony towar był przesłany z darmową przesyłką, to w przypadku zwrotu zamówienia w całości Sprzedawca potrąci koszt przesyłki w wysokości 15 zł.</li>
+          </ul>
+        </li>
+        <li>Prawo odstąpienia od umowy zawartej na odległość nie przysługuje konsumentowi w odniesieniu do umów:
+          <ul>
+            <li>o świadczenie usług, jeżeli Sprzedawca wykonał w pełni usługę za wyraźną zgodą konsumenta, który został poinformowany przed rozpoczęciem świadczenia, że po spełnieniu świadczenia przez Sprzedawcę utraci prawo odstąpienia od umowy;</li>
+            <li>w której cena lub wynagrodzenie zależy od wahań na rynku finansowym, nad którymi Sprzedawca nie sprawuje kontroli, i które mogą wystąpić przed upływem terminu do odstąpienia od umowy;</li>
+            <li><strong>w której przedmiotem świadczenia jest Produkt nieprefabrykowany, wyprodukowany według specyfikacji konsumenta lub służący zaspokojeniu jego zindywidualizowanych potrzeb;</strong></li>
+            <li>w której przedmiotem świadczenia jest Produkt ulegający szybkiemu zepsuciu lub mający krótki termin przydatności do użycia;</li>
+            <li>w której przedmiotem świadczenia jest Produkt dostarczany w zapieczętowanym opakowaniu, którego po otwarciu opakowania nie można zwrócić ze względu na ochronę zdrowia lub ze względów higienicznych, jeżeli opakowanie zostało otwarte po dostarczeniu;</li>
+            <li>w której przedmiotem świadczenia są Produkty, które po dostarczeniu, ze względu na swój charakter, zostają nierozłącznie połączone z innymi rzeczami;</li>
+            <li>w której przedmiotem świadczenia są napoje alkoholowe, których cena została uzgodniona przy zawarciu umowy Sprzedaży, a których dostarczenie może nastąpić dopiero po upływie 30 dni i których wartość zależy od wahań na rynku, nad którymi Sprzedawca nie ma kontroli;</li>
+            <li>w której konsument wyraźnie żądał, aby Sprzedawca do niego przyjechał w celu dokonania pilnej naprawy lub konserwacji; jeżeli Sprzedawca świadczy dodatkowo inne usługi niż te, których wykonania konsument żądał, lub dostarcza Produkty inne niż części zamienne niezbędne do wykonania naprawy lub konserwacji, prawo odstąpienia od umowy przysługuje konsumentowi w odniesieniu do dodatkowych usług lub Produktów;</li>
+            <li>w której przedmiotem świadczenia są nagrania dźwiękowe lub wizualne albo programy komputerowe dostarczane w zapieczętowanym opakowaniu, jeżeli opakowanie zostało otwarte po dostarczeniu;</li>
+            <li>o dostarczanie dzienników, periodyków lub czasopism, z wyjątkiem umowy o prenumeratę;</li>
+            <li>zawartej w drodze aukcji publicznej;</li>
+            <li>o świadczenie usług w zakresie zakwaterowania, innych niż do celów mieszkalnych, przewozu rzeczy, najmu samochodów, gastronomii, usług związanych z wypoczynkiem, wydarzeniami rozrywkowymi, sportowymi lub kulturalnymi, jeżeli w umowie oznaczono dzień lub okres świadczenia usługi;</li>
+            <li>o dostarczanie treści cyfrowych, które nie są zapisane na nośniku materialnym, jeżeli spełnianie świadczenia rozpoczęło się za wyraźną zgodą konsumenta przed upływem terminu do odstąpienia od umowy i po poinformowaniu go przez Sprzedawcę o utracie prawa odstąpienia od umowy.</li>
+          </ul>
+        </li>
+        <li>Postanowienia niniejszego paragrafu dotyczące konsumenta stosuje się od dnia 1 stycznia 2021 r. i dla umów zawartych od tego dnia również do Klienta będącego osobą fizyczną zawierającą umowę bezpośrednio związaną z jej działalnością gospodarczą, gdy z treści tej umowy wynika, że nie posiada ona dla tej osoby charakteru zawodowego, wynikającego w szczególności z przedmiotu wykonywanej przez nią działalności gospodarczej, udostępnionego na podstawie przepisów o Centralnej Ewidencji i Informacji o Działalności Gospodarczej.</li>
+      </ol>
+      <h2 id="par-9"><span class="sec">§&nbsp;9</span>Reklamacje</h2>
+      <ol>
+        <li>Wszystkie Towary wystawiane w Sklepie są fabrycznie nowe oraz wolne od wad prawnych.</li>
+        <li>W przypadku stwierdzenia wad Towaru, a w szczególności mechanicznego uszkodzenia Towaru lub niezgodności Towaru z zamówieniem, w ciągu dwóch lat od chwili dostarczenia Towaru Klient uprawniony jest do złożenia reklamacji w oparciu o przepisy dotyczące rękojmi w Kodeksie cywilnym.</li>
+        <li>Reklamację Klient zgłasza pisemnie lub drogą elektroniczną na podane w niniejszym Regulaminie adresy Sprzedawcy.</li>
+        <li>W reklamacji należy podać:
+          <ul>
+            <li>numer Zamówienia (lub inne dane pozwalające na identyfikację Zamówienia),</li>
+            <li>dane kontaktowe reklamującego Klienta,</li>
+            <li>opis zdarzenia będącego podstawą reklamacji.</li>
+          </ul>
+        </li>
+        <li>Sprzedawca ustosunkuje się do żądania reklamacyjnego niezwłocznie, nie później niż w terminie 14 dni.</li>
+        <li>Jeśli reklamację złożył Konsument, a Sprzedawca nie ustosunkuje się do zgłoszonej reklamacji w tym terminie, uważa się, że żądanie Konsumenta uznał za uzasadnione.</li>
+        <li>W razie uwzględnienia reklamacji przez Sprzedawcę Konsument może wskazać, czy Sprzedawca nieodpłatnie naprawi Towar, czy dostarczy nowy, niewadliwy egzemplarz Towaru. W przypadku, gdy naprawa lub dostarczenie nowego niewadliwego Towaru nie jest możliwe, Sprzedawca zwróci Klientowi uiszczoną przez niego Cenę.</li>
+        <li>Klient niebędący Konsumentem może złożyć oświadczenie o obniżeniu ceny albo odstąpieniu od umowy, chyba że Sprzedawca niezwłocznie i bez nadmiernych niedogodności dla kupującego wymieni rzecz wadliwą na wolną od wad albo wadę usunie.</li>
+        <li>W przypadku uwzględnienia reklamacji przez Sprzedawcę, Klientowi przysługuje zwrot kosztów poniesionych w celu dostarczenia Sprzedawcy reklamowanego Towaru.</li>
+        <li>Zgodnie z art. 558 § 1 Kodeksu cywilnego odpowiedzialność Sprzedawcy z tytułu rękojmi za Towar wobec Klienta niebędącego konsumentem zostaje wyłączona.</li>
+      </ol>
+      <p>Skrót zasad reklamacji i zwrotów znajdziesz też na stronie <a href="/reklamacje">Reklamacje i zwroty</a>.</p>
+      <h2 id="par-10"><span class="sec">§&nbsp;10</span>Gwarancja</h2>
+      <ol>
+        <li>Sprzedawca nie udziela w swoim imieniu gwarancji na sprzedawane w Sklepie Towary.</li>
+        <li>W przypadku, gdy Towar został objęty gwarancją producenta Towaru, informacja o niej będzie zawarta w opisie Towaru.</li>
+      </ol>
+      <h2 id="par-11"><span class="sec">§&nbsp;11</span>Dane osobowe</h2>
+      <p>Administratorem danych osobowych przetwarzanych w Sklepie w związku z realizacją postanowień niniejszego Regulaminu jest Sprzedawca. Dane osobowe przetwarzane są w celach, w zakresie i w oparciu o podstawy i zasady wskazane w <a href="/polityka-prywatnosci">Polityce prywatności</a> opublikowanej na stronie Sklepu.</p>
+      <h2 id="par-12"><span class="sec">§&nbsp;12</span>Pozasądowe sposoby rozpatrywania reklamacji i dochodzenia roszczeń</h2>
+      <p>Szczegółowe informacje dotyczące możliwości skorzystania przez Konsumenta z pozasądowych sposobów rozpatrywania reklamacji i dochodzenia roszczeń oraz zasady dostępu do tych procedur dostępne są w siedzibach oraz na stronach internetowych powiatowych (miejskich) rzeczników konsumentów, organizacji społecznych, do których zadań statutowych należy ochrona konsumentów, Wojewódzkich Inspektoratów Inspekcji Handlowej oraz pod następującymi adresami internetowych Urzędu Ochrony Konkurencji i Konsumentów: <a href="http://www.uokik.gov.pl/spory_konsumenckie.php" rel="noopener">uokik.gov.pl/spory_konsumenckie.php</a>, <a href="http://www.uokik.gov.pl/sprawy_indywidualne.php" rel="noopener">uokik.gov.pl/sprawy_indywidualne.php</a> oraz <a href="http://www.uokik.gov.pl/wazne_adresy.php" rel="noopener">uokik.gov.pl/wazne_adresy.php</a>.</p>
+      <p>Konsument posiada następujące przykładowe możliwości skorzystania z pozasądowych sposobów rozpatrywania reklamacji i dochodzenia roszczeń:</p>
+      <ul>
+        <li>Konsument uprawniony jest do zwrócenia się do stałego polubownego sądu konsumenckiego, o którym mowa w art. 37 ustawy z dnia 15 grudnia 2000 r. o Inspekcji Handlowej (Dz.U. z 2014 r. poz. 148 z późn. zm.), z wnioskiem o rozstrzygnięcie sporu wynikłego z umowy zawartej ze Sprzedawcą.</li>
+        <li>Konsument uprawniony jest do zwrócenia się do wojewódzkiego inspektora Inspekcji Handlowej, zgodnie z art. 36 ustawy z dnia 15 grudnia 2000 r. o Inspekcji Handlowej (Dz.U. z 2014 r. poz. 148 z późn. zm.), z wnioskiem o wszczęcie postępowania mediacyjnego w sprawie polubownego zakończenia sporu między Konsumentem a Sprzedawcą.</li>
+        <li>Konsument może uzyskać bezpłatną pomoc w sprawie rozstrzygnięcia sporu między nim a Sprzedawcą, korzystając także z bezpłatnej pomocy powiatowego (miejskiego) rzecznika konsumentów lub organizacji społecznej, do której zadań statutowych należy ochrona konsumentów (m.in. Federacja Konsumentów, Stowarzyszenie Konsumentów Polskich).</li>
+      </ul>
+      <h2 id="par-13"><span class="sec">§&nbsp;13</span>Pozostałe postanowienia</h2>
+      <ol>
+        <li>Zawartość stron Sklepu stanowi własność Sprzedawcy i jest prawnie chroniona.</li>
+        <li>Treści prezentowane na stronach Sklepu, a w szczególności ogłoszenia, reklamy, cenniki i inne informacje, nie stanowią oferty w rozumieniu przepisów art. 66 i 66¹ Kodeksu cywilnego, a są zaproszeniem do składania ofert.</li>
+        <li>Sprzedawca w najszerszym dopuszczalnym przez prawo zakresie nie ponosi odpowiedzialności za zakłócenia, w tym przerwy w funkcjonowaniu Sklepu spowodowane siłą wyższą, niedozwolonym działaniem osób trzecich lub niekompatybilnością Sklepu z infrastrukturą techniczną Klienta.</li>
+      </ol>
+      <h2 id="par-14"><span class="sec">§&nbsp;14</span>Postanowienia końcowe</h2>
+      <ol>
+        <li>Umowy zawierane za pośrednictwem Sklepu zawierane są w języku polskim, podlegają prawu polskiemu i wszystkie ich postanowienia będą zgodnie z nim interpretowane.</li>
+        <li>Postanowienia niniejszego Regulaminu nie mają na celu wyłączać ani ograniczać jakichkolwiek praw Konsumentów przysługujących im na mocy bezwzględnie wiążących przepisów prawa, a wszelkie ewentualne wątpliwości należy tłumaczyć na korzyść konsumenta. W przypadku ewentualnej niezgodności postanowień niniejszego Regulaminu z powyższymi przepisami, pierwszeństwo mają te przepisy i należy je stosować.</li>
+        <li>Sprzedawca zastrzega sobie prawo do dokonywania zmian Regulaminu z ważnych przyczyn, to jest: zmiany przepisów prawa; zmiany sposobów płatności i dostaw – w zakresie, w jakim te zmiany wpływają na realizację postanowień niniejszego Regulaminu.</li>
+        <li>W sprawach nieuregulowanych w niniejszym Regulaminie mają zastosowanie powszechnie obowiązujące przepisy prawa polskiego, w szczególności: Kodeksu cywilnego; ustawy o świadczeniu usług drogą elektroniczną z dnia 18 lipca 2002 r. (Dz.U. 2002 nr 144, poz. 1204 ze zm.); dla umów Sprzedaży zawartych od 25 grudnia 2014 roku z Klientami będącymi konsumentami – przepisy ustawy o prawach konsumenta z dnia 30 maja 2014 r. (Dz.U. 2014 poz. 827 ze zm.); oraz inne właściwe przepisy powszechnie obowiązującego prawa.</li>
+      </ol>
+
+    </div>
+  </div>
+</main>
+
+<!-- ===================== STOPKA ===================== -->
+<footer id="kontakt" class="bg-ink text-on-ink">
+  <div class="mx-auto max-w-6xl px-5 py-14 grid gap-12 lg:grid-cols-[1fr_1.05fr]">
+    <div>
+      <div class="text-xl font-semibold tracking-tight">textilewall</div>
+      <p class="mt-3 text-sm opacity-70 max-w-sm leading-relaxed">Tekstylne ściany i ramki na aluminiowym profilu, wykonywane na wymiar.</p>
+      <div class="mt-8 grid gap-8 sm:grid-cols-2 text-sm leading-7">
+        <div>
+          <div class="font-semibold mb-2">Kontakt</div>
+          <a href="tel:+48788788155" class="block opacity-80 hover:opacity-100">+48 788 788 155</a>
+          <a href="mailto:kontakt@textilewall.pl" class="block opacity-80 hover:opacity-100">kontakt@textilewall.pl</a>
+        </div>
+        <div class="opacity-80">
+          <div class="font-semibold mb-2 opacity-100">Mam Pomysł Konrad Czajkowski</div>
+          ul. Polna 26/2<br>55-010 Smardzów<br>NIP 6932068382
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-lg font-semibold tracking-tight">Napisz do nas</h2>
+      <p class="mt-1 text-sm opacity-70">Masz pytanie o wycenę lub nietypowy wymiar? Wyślij wiadomość, odpowiemy e-mailem.</p>
+      <form data-contact-form data-source="stopka" class="mt-5 grid gap-3.5" novalidate>
+        <div class="grid gap-3.5 sm:grid-cols-2">
+          <label class="block"><span class="cf-label">Imię i nazwisko</span><input name="name" type="text" autocomplete="name" required maxlength="100" class="cf-input"></label>
+          <label class="block"><span class="cf-label">E-mail</span><input name="email" type="email" autocomplete="email" required maxlength="200" class="cf-input"></label>
+        </div>
+        <label class="block"><span class="cf-label">Telefon <span class="opacity-70">(opcjonalnie)</span></span><input name="phone" type="tel" autocomplete="tel" maxlength="30" class="cf-input"></label>
+        <label class="block"><span class="cf-label">Wiadomość</span><textarea name="message" rows="4" required maxlength="3000" class="cf-input"></textarea></label>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="cf-hp" aria-hidden="true">
+        <label class="flex items-start gap-2.5 text-xs opacity-80 leading-relaxed"><input type="checkbox" name="consent" class="cf-check mt-0.5" required><span>Zapoznałem się z <a href="/polityka-prywatnosci" class="underline underline-offset-2">Polityką prywatności</a> i wiem, że moje dane posłużą do odpowiedzi na wiadomość.</span></label>
+        <div class="flex flex-wrap items-center gap-4">
+          <button type="submit" class="cf-btn">Wyślij wiadomość</button>
+          <p data-cf-status role="status" aria-live="polite" class="cf-status text-sm"></p>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="mx-auto max-w-6xl px-5 py-6 flex flex-wrap gap-x-6 gap-y-2 justify-between text-xs opacity-60">
+      <span>© <span id="year"></span> TextileWall.pl</span>
+      <span class="flex flex-wrap gap-x-5 gap-y-2"><a href="/regulamin" class="hover:opacity-100">Regulamin</a><a href="/polityka-prywatnosci" class="hover:opacity-100">Polityka prywatności</a><a href="/dostawa" class="hover:opacity-100">Dostawa i płatność</a><a href="/reklamacje" class="hover:opacity-100">Reklamacje i zwroty</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
