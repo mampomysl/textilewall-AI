@@ -1131,9 +1131,9 @@ document.addEventListener('keydown', e => {
 /* =====================================================================
    START
    ===================================================================== */
-$('#hero-wall').innerHTML = wallPreview('hero', 250, 180, 'tapeta',
-  '<img src="/assets/hero.jpg" width="735" height="490" alt="Zbliżenie na krawędź aluminiowego profilu z naciągniętą tkaniną z nadrukiem" class="block w-full h-full object-cover" fetchpriority="high" decoding="async">');
-sizeArt('hero', 250, 180);
+$('#hero-wall').innerHTML = '<div class="relative aspect-[3/2] w-full rounded-2xl overflow-hidden bg-sunk">' +
+  '<img src="/assets/hero.jpg" width="735" height="490" alt="Zbliżenie na krawędź aluminiowego profilu z naciągniętą tkaniną z nadrukiem" class="absolute inset-0 block w-full h-full object-cover" fetchpriority="high" decoding="async">' +
+  '</div>';
 renderProducts();
 renderCart();
 $('#year').textContent = new Date().getFullYear();
