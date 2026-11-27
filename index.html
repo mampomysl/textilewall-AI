@@ -119,6 +119,7 @@
     .num-input{ @apply w-24 h-10 rounded-lg border border-line bg-surface px-3 text-right font-semibold tabular-nums outline-none focus:border-ink; }
   }
 </style>
+<link rel="preload" as="image" href="/assets/hero.jpg" fetchpriority="high">
 <link rel="stylesheet" href="/assets/contact-form.css">
 <script src="/assets/contact-form.js" defer></script>
 </head>
@@ -336,6 +337,7 @@ const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const product = id => PRODUCTS.find(p => p.id === id);
 const lim = axis => axis === 'w' ? [CONFIG.limits.minW, CONFIG.limits.maxW] : [CONFIG.limits.minH, CONFIG.limits.maxH];
 const utm = `?utm_source=${CONFIG.unsplash.appName}&utm_medium=referral`;
+const AI_NOTE = 'Zdjęcia z galerii przed drukiem modyfikujemy z użyciem AI, dlatego wydruk będzie się różnić od zdjęcia widocznego w galerii i w podglądzie. Projekt po obróbce wyślemy Ci e-mailem do akceptacji – drukujemy dopiero po Twojej zgodzie.';
 
 /* ===== CENY – liczone na serwerze (/api/price); w tym pliku nie ma żadnego cennika ===== */
 const priceCache = new Map();                 // "tapeta|250|180" → cena brutto w zł
@@ -671,7 +673,8 @@ function step2() {
     </form>
     <div class="mt-3 flex flex-wrap gap-2">${TAGS.map(t => `<button data-tag="${t}" class="chip">${t}</button>`).join('')}</div>
     <div id="gallery" class="mt-6"></div>
-    <p class="mt-6 text-xs text-muted">Zdjęcia pochodzą z serwisu <a class="underline underline-offset-2" href="https://unsplash.com/${utm}" target="_blank" rel="noopener">Unsplash</a>.</p>
+    <p class="mt-6 text-xs text-muted">Zdjęcia pochodzą z serwisu <a class="underline underline-offset-2" href="https://unsplash.com/${utm}" target="_blank" rel="noopener">Unsplash</a>.*</p>
+    <p class="mt-2 text-xs text-muted">* ${AI_NOTE}</p>
   </div>`;
 }
 
@@ -894,7 +897,7 @@ function step4() {
         ${row('Produkt', p.name, 1)}
         ${row('Wymiary', `<span class="tabular-nums">${state.w} × ${state.h} cm</span>`, 1)}
         ${row('Powierzchnia', area(state.w, state.h).replace('Powierzchnia ', ''))}
-        ${row('Grafika', attribution(), 2)}
+        ${row('Grafika', attribution() + (state.image?.source === 'unsplash' ? '*' : ''), 2)}
         ${row('Jakość druku', `<span class="inline-flex items-center gap-2"><span class="w-2 h-2 rounded-full" style="background:${q.color}"></span>${q.label} (${state.crop.dpi} dpi)</span>`, 3)}
       </dl>
       <div class="mt-6 flex items-end justify-between">
@@ -902,6 +905,7 @@ function step4() {
         <span id="sum-price" class="text-3xl font-semibold tabular-nums">…</span>
       </div>
       <p class="mt-2 text-xs text-muted">Koszt dostawy zobaczysz przy płatności.</p>
+      ${state.image?.source === 'unsplash' ? `<p class="mt-5 rounded-xl border border-line bg-sunk p-3.5 text-xs leading-relaxed">* ${AI_NOTE}</p>` : ''}
     </div>
   </div>`;
 }
@@ -980,6 +984,7 @@ function renderCart() {
           </div>
           <p class="text-sm text-muted tabular-nums">${i.w} × ${i.h} cm</p>
           <p class="text-xs text-muted truncate">${esc(graphicLabel(i))}</p>
+          ${i.graphic?.source === 'unsplash' ? '<p class="mt-1 text-xs text-muted">* Projekt po obróbce AI wyślemy do akceptacji przed drukiem.</p>' : ''}
           <div class="mt-3 flex items-center justify-between">
             <div class="inline-flex items-center rounded-full border border-line">
               <button data-qty="${i.uid}" data-d="-1" class="w-8 h-8 text-lg leading-none" aria-label="Zmniejsz ilość">−</button>
@@ -1126,7 +1131,8 @@ document.addEventListener('keydown', e => {
 /* =====================================================================
    START
    ===================================================================== */
-$('#hero-wall').innerHTML = wallPreview('hero', 250, 180, 'tapeta');
+$('#hero-wall').innerHTML = wallPreview('hero', 250, 180, 'tapeta',
+  '<img src="/assets/hero.jpg" width="735" height="490" alt="Zbliżenie na krawędź aluminiowego profilu z naciągniętą tkaniną z nadrukiem" class="block w-full h-full object-cover" fetchpriority="high" decoding="async">');
 sizeArt('hero', 250, 180);
 renderProducts();
 renderCart();
